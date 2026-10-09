@@ -1,0 +1,4315 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聚✨養成計畫 | SOMETHING IN THE MAKING</title>
+  <style>
+    /* Global Reset & CSS Variables */
+    :root {
+      --font-scale: 1rem;
+      --bg-main: #F4F1EA;
+      --bg-header: #E6D8C6;
+      --bg-control: #EFE8DA;
+      --bg-column: #ECE8DD;
+      --bg-card: #FFFFFF;
+      --text-dark: #1A1A1A;
+      --text-muted: #666666;
+      --primary-color: #4A3B32;
+      --accent-color: #8C6D53;
+      --accent-green: #2E7D32;
+      --accent-green-bg: #E8F5E9;
+      --accent-yellow: #FFF8E1;
+      --accent-yellow-border: #FFE082;
+      --accent-yellow-text: #B78103;
+      --accent-weekend: #FFEBEE;
+      --accent-weekend-text: #D32F2F;
+      --border-color: #D6CEBE;
+      --hover-bg: #EFE4D6;
+      --shadow-sm: 0 2px 6px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-pill: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      font-size: var(--font-scale);
+      line-height: 1.4;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background-color: #fff;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.65rem;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: var(--hover-bg);
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      background-color: #eee;
+    }
+
+    /* Global Speech Bubble Tooltip (#1A1A1A) */
+    #globalTooltip {
+      position: fixed;
+      z-index: 999999;
+      background-color: #1A1A1A;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      display: none;
+    }
+
+    #globalTooltip::before {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      border-width: 6px;
+    }
+
+    #globalTooltip.arrow-down::before {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-color: #1A1A1A transparent transparent transparent;
+    }
+
+    #globalTooltip.arrow-up::before {
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-color: transparent transparent #1A1A1A transparent;
+    }
+
+    /* Row 1 Header (#E6D8C6) */
+    header {
+      height: 54px;
+      padding: 0 1rem;
+      background-color: var(--bg-header);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #D8C3AC;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .hdr-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .logo-box {
+      background-color: #1A1A1A;
+      color: #FFFFFF;
+      width: 2.1rem;
+      height: 2.1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1A1A1A;
+      letter-spacing: -0.5px;
+    }
+
+    .view-capsule {
+      background-color: #D6C4B0;
+      padding: 3px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      gap: 3px;
+    }
+
+    .capsule-btn {
+      border: none;
+      background: transparent;
+      padding: 0.3rem 0.85rem;
+      border-radius: 17px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      height: 28px;
+      transition: all 0.2s;
+    }
+
+    .capsule-btn.active {
+      background-color: #fff;
+      color: var(--primary-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .hdr-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .font-btn-group {
+      display: flex;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: #fff;
+      height: 30px;
+    }
+
+    .font-btn-group button {
+      border: none;
+      border-radius: 0;
+      padding: 0 0.5rem;
+      height: 100%;
+      font-size: 0.82rem;
+    }
+
+    .font-btn-group button:first-child {
+      border-right: 1px solid var(--border-color);
+    }
+
+    select.lang-select {
+      height: 30px;
+      padding: 0 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: #fff;
+      font-weight: 600;
+      font-size: 0.82rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Circular Header Icon Buttons */
+    .hdr-icon-btn,
+    .share-btn {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: 50%;
+      background-color: #1A1A1A !important;
+      border: 1px solid #333333 !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .hdr-icon-btn:hover,
+    .share-btn:hover {
+      background-color: #333333 !important;
+      transform: scale(1.06);
+    }
+
+    .hdr-icon-btn svg,
+    .share-btn svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+      fill: #FFFFFF;
+    }
+
+    /* Row 2 Control Bar */
+    .control-bar {
+      height: 42px;
+      padding: 0 1rem;
+      background-color: var(--bg-control);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .ctrl-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .week-nav-group {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      height: 30px;
+      padding: 0 4px;
+    }
+
+    .week-nav-btn {
+      border: none;
+      background: transparent;
+      padding: 0 0.5rem;
+      height: 100%;
+      font-weight: bold;
+      font-size: 0.88rem;
+    }
+    .week-nav-btn:hover {
+      background-color: var(--hover-bg);
+    }
+
+    .week-range-text {
+      padding: 0 0.6rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      color: var(--primary-color);
+    }
+
+    .progress-stats-box {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      background-color: rgba(255,255,255,0.8);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-highlight {
+      color: var(--accent-green);
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin: 0 2px;
+    }
+
+    .btn-host-plan {
+      background: linear-gradient(135deg, #E6D8C6, #D8C4B0);
+      color: var(--primary-color);
+      border: 1px solid #C8B59E;
+      border-radius: 20px;
+      height: 30px;
+      padding: 0 0.75rem;
+      font-weight: 700;
+      font-size: 0.82rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+    }
+
+    .ctrl-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-support-pill {
+      background-color: #FFF;
+      border: 1px solid #F8BBD0;
+      color: #C2185B;
+      border-radius: 20px;
+      height: 30px;
+      padding: 0 0.75rem;
+      font-weight: 700;
+      font-size: 0.82rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(194, 24, 91, 0.08);
+    }
+
+    .btn-support-pill:hover {
+      background-color: #FCE4EC;
+      border-color: #E91E63;
+      transform: translateY(-1px);
+    }
+
+    .btn-drawer-pill {
+      background-color: #FFF;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      height: 30px;
+      padding: 0 0.75rem;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--primary-color);
+    }
+
+    /* Main Area Layout */
+    main {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .view-content {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .view-content.active {
+      display: flex;
+    }
+
+    /* Kanban Scheduler Layout */
+    .kanban-layout {
+      flex: 1;
+      display: flex;
+      height: 100%;
+      overflow: hidden;
+      padding: 0.6rem;
+      gap: 0.6rem;
+      position: relative;
+    }
+
+    /* Single Integrated Kanban Scroll Wrapper */
+    .kanban-scroll-wrapper {
+      flex: 1;
+      overflow-x: auto;
+      overflow-y: auto;
+      height: 100%;
+      min-width: 0;
+    }
+
+    .kanban-board {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(150px, 1fr));
+      gap: 0.6rem;
+      min-width: 1080px;
+      align-items: start;
+    }
+
+    /* Kanban Column Styles */
+    .kanban-col {
+      background-color: var(--bg-column);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+      min-height: 100%;
+      height: fit-content;
+      transition: background-color 0.2s ease;
+    }
+
+    .kanban-col.drag-over {
+      background-color: #E2DAC8;
+      border-style: dashed;
+      border-color: var(--primary-color);
+    }
+
+    .col-header {
+      padding: 0.5rem 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      background-color: rgba(255,255,255,0.45);
+      flex-shrink: 0;
+      border-top-left-radius: var(--radius-md);
+      border-top-right-radius: var(--radius-md);
+    }
+
+    .col-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .col-date-title {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--primary-color);
+    }
+
+    .col-date-title.weekend {
+      color: #D9534F;
+    }
+
+    .col-count-badge {
+      background-color: #D0C6B4;
+      color: var(--primary-color);
+      font-size: 0.7rem;
+      font-weight: 800;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .col-body {
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-y: visible;
+    }
+
+    .col-footer {
+      padding: 0.4rem;
+      flex-shrink: 0;
+      margin-top: auto;
+    }
+
+    .btn-quick-add {
+      width: 100%;
+      border: 1.5px dashed var(--border-color);
+      background-color: rgba(255,255,255,0.6);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.35rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-quick-add:hover {
+      background-color: #FFFFFF;
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    /* Course Cards */
+    .kanban-card {
+      background-color: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 0.55rem 0.65rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: relative;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .kanban-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .kanban-card.completed {
+      background-color: #F8F9F8;
+      border-color: #C8E6C9;
+    }
+
+    .kanban-card.completed .card-title {
+      text-decoration: line-through;
+      color: #78909C;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-time-tag {
+      background-color: var(--accent-yellow);
+      border: 1px solid var(--accent-yellow-border);
+      color: var(--accent-yellow-text);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .card-btn-icon {
+      border: none;
+      background: transparent;
+      color: #B0BEC5;
+      font-size: 0.85rem;
+      padding: 0 2px;
+      cursor: pointer;
+    }
+    .card-btn-icon:hover {
+      color: #E53935;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-title:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 2px;
+    }
+
+    .chk-complete-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #C8C0B0;
+      background-color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .chk-complete-btn:hover {
+      border-color: var(--accent-green);
+    }
+
+    .chk-complete-btn.active {
+      background-color: var(--accent-green);
+      border-color: var(--accent-green);
+      color: #FFF;
+      font-weight: 800;
+      font-size: 0.7rem;
+    }
+
+    /* Right Material Drawer Panel & Smooth Collapse */
+    .material-drawer {
+      width: 265px;
+      background-color: #FFFFFF;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex-shrink: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .material-drawer.collapsed {
+      width: 0;
+      opacity: 0;
+      pointer-events: none;
+      margin: 0;
+      border: none;
+      padding: 0;
+      display: none;
+    }
+
+    /* Drawer Floating Right Edge Tab Handle */
+    .drawer-floating-tab {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #E6D8C6, #D8C4B0);
+      color: var(--primary-color);
+      border: 1px solid #C8B59E;
+      border-right: none;
+      border-radius: 16px 0 0 16px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+      box-shadow: -3px 4px 12px rgba(0,0,0,0.12);
+      z-index: 100;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: none;
+    }
+
+    .drawer-floating-tab:hover {
+      background: linear-gradient(135deg, #DFCEBA, #CDB8A2);
+      padding-right: 1rem;
+    }
+
+    .drawer-header {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background-color: rgba(248, 246, 240, 0.6);
+    }
+
+    .drawer-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .btn-add-mat {
+      border: none;
+      background: var(--bg-header);
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .drawer-search-box {
+      position: relative;
+    }
+
+    .drawer-search-input {
+      width: 100%;
+      padding: 0.35rem 0.6rem 0.35rem 1.7rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-color);
+      font-size: 0.8rem;
+      outline: none;
+      background-color: #FFF;
+    }
+
+    .drawer-search-icon {
+      position: absolute;
+      left: 0.55rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Dropdown Multi-Select Tag Filter CSS */
+    .tag-dropdown-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .tag-dropdown-btn {
+      width: 100%;
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-color);
+      background-color: #FFF;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tag-dropdown-btn:hover {
+      background-color: #F8F6F0;
+      border-color: var(--accent-color);
+    }
+
+    .tag-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background-color: #FFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 0.4rem 0;
+      z-index: 100;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+    }
+
+    .tag-dropdown-menu.show {
+      display: flex;
+    }
+
+    .tag-dropdown-item {
+      padding: 0.4rem 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tag-dropdown-item:hover {
+      background-color: var(--hover-bg);
+    }
+
+    .tag-dropdown-item input[type="checkbox"] {
+      cursor: pointer;
+      width: 14px;
+      height: 14px;
+      accent-color: var(--accent-green);
+    }
+
+    .drawer-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .empty-drawer-notice {
+      padding: 1.5rem 0.8rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    /* Material Item Card in Drawer & Morandi Thumbnail Fallback */
+    .material-card {
+      background-color: #FAFAFA;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem;
+      display: flex;
+      gap: 0.45rem;
+      align-items: center;
+      cursor: grab;
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    .material-card:hover {
+      background-color: #FFF;
+      box-shadow: var(--shadow-sm);
+      border-color: var(--primary-color);
+    }
+
+    .mat-thumb {
+      width: 48px;
+      height: 36px;
+      border-radius: 6px;
+      object-fit: cover;
+      background-color: #DDD;
+      flex-shrink: 0;
+    }
+
+    .mat-thumb-fallback {
+      width: 48px;
+      height: 36px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #E6D8C6, #C8B8A2);
+      color: var(--primary-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    }
+
+    .mat-thumb-fallback .fallback-icon {
+      font-size: 0.75rem;
+      line-height: 1;
+    }
+
+    .mat-thumb-fallback .fallback-text {
+      font-size: 0.65rem;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .mat-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mat-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mat-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .btn-collect-star {
+      border: 1px solid var(--border-color);
+      background: #FFF;
+      color: var(--primary-color);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .btn-collect-star:hover {
+      background-color: #FFF8E1;
+      border-color: #FFC107;
+    }
+
+    .drawer-footer-hint {
+      padding: 0.35rem 0.5rem;
+      border-top: 1px solid var(--border-color);
+      background-color: #F8F6F0;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Theme Library View */
+    .theme-view-container {
+      padding: 1.2rem;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .theme-card {
+      background-color: #FFF;
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .theme-card h3 {
+      font-size: 1rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.3rem;
+    }
+
+    .theme-link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.3rem 0;
+      font-size: 0.85rem;
+    }
+
+    .theme-link-item a {
+      color: #1976D2;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Modals Engine */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(2px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background-color: #FFFFFF;
+      border-radius: var(--radius-md);
+      width: 90%;
+      max-width: 460px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+      position: relative;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-hdr {
+      padding: 0.75rem 1rem;
+      background-color: var(--bg-header);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .modal-hdr h3 {
+      font-size: 1rem;
+      color: var(--primary-color);
+      font-weight: 800;
+    }
+
+    .modal-close-btn {
+      border: none;
+      background: transparent;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .form-control {
+      padding: 0.45rem 0.65rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+    }
+
+    .url-input-row {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .btn-url-add, .btn-url-del {
+      height: 34px;
+      width: 34px;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .modal-ftr {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      background-color: #FAF8F5;
+      flex-shrink: 0;
+    }
+
+    /* Neumorphic 3D Raised Buttons & Member Center Redesign */
+    .member-modal-box {
+      max-width: 500px;
+      width: 90%;
+      border-radius: 20px;
+      background-color: #FAF8F5;
+      max-height: 85vh;
+    }
+
+    .neu-btn-group {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .neu-btn {
+      flex: 1;
+      padding: 0.6rem 0.8rem;
+      border-radius: 12px;
+      background-color: #FAF8F5;
+      border: 1px solid #D8C3AC;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #4A3B32;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px rgba(0,0,0,0.1), -2px -2px 5px rgba(255,255,255,0.9);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      user-select: none;
+    }
+
+    .neu-btn:hover {
+      background-color: #F4EFE6;
+      transform: translateY(-1px);
+      box-shadow: 4px 4px 8px rgba(0,0,0,0.12), -3px -3px 6px rgba(255,255,255,0.95);
+    }
+
+    .neu-btn:active, .neu-btn.active {
+      box-shadow: inset 2px 2px 4px rgba(0,0,0,0.15), inset -1px -1px 3px rgba(255,255,255,0.8);
+      transform: translateY(1px);
+      background-color: #ECE3D4;
+      border-color: #C8B29C;
+    }
+
+    .backup-btn-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-backup-action {
+      flex: 1;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      border: 1px dashed var(--accent-color);
+      background-color: #FFF8E1;
+      color: var(--primary-color);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-backup-action:hover {
+      background-color: #FFE082;
+    }
+
+    .member-auth-card {
+      background-color: #FFF;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.85rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Member Accordion Styles */
+    .member-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .accordion-item {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background-color: #FFFFFF;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .accordion-item:hover {
+      border-color: var(--accent-color);
+    }
+
+    .accordion-header {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      background-color: #FFFFFF;
+      border: none;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      cursor: pointer;
+      text-align: left;
+      user-select: none;
+    }
+
+    .accordion-header:hover {
+      background-color: #F8F6F0;
+    }
+
+    .acc-arrow {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+    }
+
+    .accordion-item.open .acc-arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+      background-color: #FAF9F5;
+    }
+
+    .accordion-item.open .accordion-content {
+      max-height: 1000px;
+      transition: max-height 0.35s ease-in-out;
+    }
+
+    .acc-inner {
+      padding: 0.75rem 0.9rem;
+      font-size: 0.83rem;
+      line-height: 1.55;
+      color: #333333;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .acc-inner strong {
+      color: var(--primary-color);
+      font-weight: 800;
+    }
+
+    .acc-inner p {
+      margin-bottom: 0.4rem;
+    }
+
+    .acc-inner p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Voluntary Support Modal Special Styles */
+    .support-modal-box {
+      max-width: 480px;
+    }
+
+    .support-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .support-modal-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .support-currency-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .support-currency-select {
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-size: 0.8rem;
+      font-weight: 700;
+      outline: none;
+      background-color: #fff;
+    }
+
+    .support-intro-card {
+      background-color: #F8F6F0;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.85rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--text-dark);
+      margin-bottom: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .support-intro-card .highlight-text {
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .support-amount-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .support-amount-card {
+      background-color: #FFF;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.4rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .support-amount-card:hover {
+      border-color: var(--accent-color);
+      background-color: #FFF8E1;
+    }
+
+    .support-amount-card.selected {
+      border-color: #F57C00;
+      background-color: #FFF3E0;
+      box-shadow: 0 0 0 1px #F57C00;
+    }
+
+    .support-amount-card .amount-val {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .support-amount-card .amount-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .support-anon-option {
+      margin-bottom: 0.8rem;
+    }
+
+    .support-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn-submit-support {
+      width: 100%;
+      background-color: var(--primary-color);
+      color: #FFF;
+      border: none;
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit-support:hover {
+      background-color: #362A24;
+    }
+
+    .support-reassurance {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .support-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #EFE8DA;
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Social Share Grid Buttons */
+    .social-share-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      padding: 0.5rem 0;
+    }
+
+    .btn-share-social {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.75rem 0.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background-color: #FFF;
+      transition: all 0.2s ease;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-share-social:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .share-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      flex-shrink: 0;
+    }
+
+    .share-icon-circle svg {
+      width: 22px;
+      height: 22px;
+      fill: #FFF;
+    }
+
+    .share-icon-line { background-color: #06C755; }
+    .share-icon-fb { background-color: #1877F2; }
+    .share-icon-threads { background-color: #000000; }
+    .share-icon-x { background-color: #000000; }
+    .share-icon-copy { background: linear-gradient(135deg, #FF6B6B, #FF8E53); }
+
+    /* Video Player Modal Fixes */
+    #modalVideo.modal-overlay {
+      align-items: flex-start !important;
+      padding: 2.5vh 1rem !important;
+      overflow-y: auto !important;
+    }
+
+    #modalVideo .video-modal-box {
+      margin: 0 auto !important;
+      max-height: 95vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      max-width: 850px;
+      width: 92%;
+    }
+
+    #modalVideo .modal-body {
+      flex: 1 !important;
+      padding: 0.8rem 1rem !important;
+      overflow-y: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.6rem !important;
+    }
+
+    #modalVideo .video-player-container {
+      position: relative;
+      width: 100% !important;
+      max-height: 68vh !important; /* 防止影片本體過高擠壓底下來 */
+      aspect-ratio: 16 / 9;
+      background-color: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .video-player-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-playlist-bar {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 8px 0 4px 0 !important;
+      border-top: 1px solid var(--border-color) !important;
+      overflow-x: auto !important; /* 確保超出時可左右滑動 */
+    }
+
+    .video-playlist {
+      display: flex !important;
+      gap: 8px !important;
+      width: 100% !important;
+      overflow-x: auto !important;
+      padding: 2px 0 !important;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch; /* 手機端平滑滑動 */
+    }
+
+    .playlist-item {
+      flex-shrink: 0 !important; /* 嚴禁按鈕被壓縮變形 */
+      padding: 6px 14px !important;
+      background-color: var(--bg-main);
+      font-size: 0.85rem !important;
+      font-weight: 700 !important;
+      border-radius: 8px !important;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid var(--border-color);
+    }
+
+    .playlist-item.active {
+      background-color: var(--primary-color);
+      color: #FFF;
+      border-color: var(--primary-color);
+    }
+
+    .btn-external-link {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1976D2;
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 0.35rem 0.7rem;
+      background: #E3F2FD;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    /* Today Column Highlight Style */
+    .kanban-col.today-highlight {
+      background-color: #FFFDF5 !important;
+      border: 2px solid #FFA726 !important;
+      box-shadow: 0 4px 14px rgba(255, 167, 38, 0.2) !important;
+    }
+    .kanban-col.today-highlight .col-header {
+      background: linear-gradient(135deg, #FFF3E0, #FFE0B2) !important;
+      border-bottom: 1px solid #FFCC80 !important;
+    }
+    .kanban-col.today-highlight .col-date-title {
+      color: #E65100 !important;
+      font-weight: 800 !important;
+    }
+
+    /* Desktop hide hdr-support-btn */
+    .hdr-support-btn {
+      display: none;
+    }
+
+    /* Responsive RWD Optimizations for Mobile Screens (<= 768px) */
+    @media (max-width: 768px) {
+      html, body {
+        height: auto !important;
+        min-height: 100vh !important;
+        max-height: none !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important; /* 允許整頁自然垂直滾動 */
+      }
+
+      /* 頂部 Header 雙行對齊結構 */
+      header {
+        height: auto !important;
+        padding: 6px 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+      }
+      .hdr-left {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+      .logo-text {
+        white-space: nowrap !important; /* 強制標題單行不折行 */
+        font-size: clamp(1rem, 4.2vw, 1.15rem) !important;
+      }
+      .view-capsule .capsule-btn {
+        padding: 2px 8px !important;
+        font-size: 0.78rem !important;
+      }
+      .hdr-right {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 4px !important;
+        flex-wrap: nowrap !important;
+      }
+      .hdr-right button, .hdr-right select {
+        height: 30px !important;
+        padding: 0 5px !important;
+        font-size: 0.76rem !important;
+      }
+      .hdr-right .hdr-icon-btn, .hdr-right .share-btn {
+        width: 30px !important;
+        height: 30px !important;
+        padding: 4px !important;
+        flex-shrink: 0;
+      }
+      .hdr-right .hdr-support-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 30px !important;
+        padding: 0 8px !important;
+        font-size: 0.76rem !important;
+        margin: 0 !important;
+      }
+
+      /* 核心控制列 (Control Bar) 精準佈局 */
+      .control-bar {
+        height: auto !important;
+        padding: 8px 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        background-color: var(--bg-control) !important;
+      }
+
+      /* 控制列第 1 行：日期導覽 + 累計進度膠囊並排 */
+      .ctrl-left {
+        width: 100% !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+      .week-nav-group {
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+      }
+      .week-range-text {
+        font-size: 0.82rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.2px;
+      }
+      .progress-stats-box {
+        font-size: 0.78rem !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+        padding: 2px 8px !important;
+      }
+
+      /* 手機版 100% 寬度明顯獨立的「看樓主的養成計畫」按鈕 */
+      #btnHostPlan {
+        display: flex !important;
+        width: 100% !important;
+        margin-top: 6px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 34px !important;
+        font-size: 0.85rem !important;
+        font-weight: 800 !important;
+        border-radius: 18px !important;
+      }
+
+      /* 手機版完全隱藏「收起/展開教材庫」按鈕 */
+      #btnToggleDrawer {
+        display: none !important;
+      }
+
+      .ctrl-right {
+        display: none !important; /* 手機端不需要 ctrl-right 區塊，#btnSupportUs 已在 header 呈現 */
+      }
+
+      /* 主畫面轉為垂直流式滾動 */
+      main {
+        flex: none !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        display: block !important;
+        overflow: visible !important;
+      }
+
+      .view-content {
+        display: none;
+        height: auto !important;
+        min-height: auto !important;
+      }
+
+      .view-content.active {
+        display: block !important;
+        height: auto !important;
+      }
+
+      .kanban-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important;
+        padding: 10px !important;
+        gap: 16px !important;
+        overflow: visible !important;
+      }
+
+      .kanban-scroll-wrapper {
+        overflow: visible !important;
+        height: auto !important;
+        flex: none !important;
+      }
+
+      /* 7 天看板轉為直向單行卡片清單 */
+      .kanban-board {
+        display: flex !important;
+        flex-direction: column !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        gap: 12px !important;
+      }
+      .kanban-col {
+        width: 100% !important;
+        min-height: auto !important;
+        border-radius: 12px !important;
+      }
+
+      /* 影片卡片水平橫跨好讀模式 */
+      .kanban-card {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 8px 10px !important;
+        gap: 8px !important;
+      }
+      .card-top {
+        flex-shrink: 0;
+      }
+      .card-title {
+        flex: 1;
+        white-space: normal !important; /* 不強制截斷，自然易讀 */
+        padding: 0 8px;
+        font-size: clamp(0.85rem, 3.8vw, 0.95rem) !important;
+        line-height: 1.4 !important;
+      }
+      .card-bottom {
+        margin-top: 0 !important;
+        flex-shrink: 0;
+      }
+      .chk-complete-btn {
+        width: 28px !important;
+        height: 28px !important; /* 手機端大按鈕更好點擊 */
+      }
+
+      /* 教材庫抽屜轉為底部滑動面板 */
+      .material-drawer {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 70vh !important;
+        max-height: 70vh !important;
+        z-index: 1050 !important;
+        border-radius: 16px 16px 0 0 !important;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.2) !important;
+        transform: translateY(100%) !important; /* 預設完全收合在底部 */
+        transition: transform 0.3s ease;
+      }
+      .material-drawer.open {
+        transform: translateY(0) !important; /* 展開時向上向上滑出 */
+      }
+      .material-drawer.collapsed {
+        transform: translateY(100%) !important;
+        display: flex !important;
+        pointer-events: none;
+      }
+
+      /* 手機版標題與幣別切換器分兩行顯示 */
+      .support-modal-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+        padding-bottom: 8px !important;
+      }
+
+      .support-modal-title {
+        font-size: 1.05rem !important;
+        white-space: nowrap !important;
+        width: 100% !important;
+      }
+
+      .support-currency-wrap {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+
+      .support-currency-select {
+        flex: 1 !important;
+        max-width: 200px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Global Speech Bubble Tooltip Container -->
+  <div id="globalTooltip"></div>
+
+  <!-- Drawer Floating Right Edge Tab Handle -->
+  <button id="drawerFloatingTab" class="drawer-floating-tab" onclick="toggleDrawer()" data-tooltip="展開教材庫">◀ 📗 教材庫</button>
+
+  <!-- Row 1 Header -->
+  <header>
+    <div class="hdr-left">
+      <div class="logo-container" onclick="showMainSchedulerView()" data-tooltip="返回週看板">
+        <div class="logo-box">聚</div>
+        <div class="logo-text" data-i18n="mainTitle">✨養成計畫</div>
+      </div>
+      <div class="view-capsule">
+        <button class="capsule-btn active" id="btnViewScheduler" data-i18n="navScheduler" data-tooltip="切換至週看板視圖">週看板</button>
+        <button class="capsule-btn" id="btnViewTheme" data-i18n="navTheme" data-tooltip="切換至主題收藏庫">主題收藏庫</button>
+      </div>
+    </div>
+
+    <div class="hdr-right">
+      <div class="font-btn-group">
+        <button id="btnFontDec" data-tooltip="縮小字型">A-</button>
+        <button id="btnFontInc" data-tooltip="放大字型">A+</button>
+      </div>
+
+      <select class="lang-select" id="langSelect" data-tooltip="切換介面語言 / Switch Language">
+        <option value="zh-TW">繁體中文</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="es">Español</option>
+      </select>
+
+      <button class="hdr-icon-btn" id="btnMember" aria-label="會員中心" data-tooltip="會員中心">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </button>
+
+      <button class="share-btn" id="btnShare" aria-label="分享" data-tooltip="分享">
+        <svg viewBox="0 0 24 24">
+          <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z"/>
+        </svg>
+      </button>
+
+      <button class="hdr-icon-btn" id="btnVoiceIntro" aria-label="欸？為什麼我們做這個？" data-tooltip="欸？為什麼我們做這個？">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+
+      <button class="btn-support-pill hdr-support-btn" id="btnSupportUsHdr" onclick="openSupportModal()" data-i18n="btnSupportUs" data-tooltip="喜歡這個工具嗎？歡迎給我們一點小鼓勵 😊">💛 支持</button>
+    </div>
+  </header>
+
+  <!-- Row 2 Control Bar -->
+  <div class="control-bar">
+    <div class="ctrl-left">
+      <div class="week-nav-group">
+        <button class="week-nav-btn" id="btnPrevWeek" data-tooltip="上一週">&lt;</button>
+        <span class="week-range-text" id="weekRangeDisplay">2026/09/28 - 2026/10/04</span>
+        <button class="week-nav-btn" id="btnNextWeek" data-tooltip="下一週">&gt;</button>
+      </div>
+
+      <div class="progress-stats-box">
+        <span data-i18n="completedProgressLabel">本週累計完成：</span><span class="progress-highlight" id="lblCompletedCount">0</span> / <span id="lblTotalCount">0</span> <span data-i18n="videoUnit">部影片</span>
+      </div>
+
+      <button class="btn-host-plan" id="btnHostPlan" data-i18n="btnHostPlan" data-tooltip="切換看樓主示範計畫/我的行事曆">✨ 看樓主的養成計畫</button>
+    </div>
+
+    <div class="ctrl-right">
+      <button class="btn-drawer-pill" id="btnToggleDrawer" data-tooltip="收合或展開右側教材庫">收起教材庫 ▶</button>
+      <button class="btn-support-pill" id="btnSupportUs" data-i18n="btnSupportUs" data-tooltip="喜歡這個工具嗎？歡迎給我們一點小鼓勵 😊">💛 小小支持</button>
+    </div>
+  </div>
+
+  <!-- Main View Area -->
+  <main>
+    <!-- View 1: 7-Day Kanban Board -->
+    <div class="view-content active" id="viewScheduler">
+      <div class="kanban-layout">
+        <!-- Single Integrated Kanban Scroll Wrapper -->
+        <div class="kanban-scroll-wrapper">
+          <div class="kanban-board" id="kanbanBoard">
+            <!-- Dynamically Generated 7 Columns -->
+          </div>
+        </div>
+
+        <!-- Collapsible Right Material Drawer -->
+        <div class="material-drawer" id="drawerMaterials">
+          <div class="drawer-header">
+            <div class="drawer-title-row">
+              <span class="drawer-title" id="drawerTotalCount" data-i18n="drawerTitle">📗 教材庫 (0)</span>
+              <div>
+                <button class="btn-add-mat" id="btnAddMaterial" data-i18n="btnAddMaterial" data-tooltip="新增個人教材/課程">+ 新增教材</button>
+              </div>
+            </div>
+            <div class="drawer-search-box">
+              <span class="drawer-search-icon">🔍</span>
+              <input type="text" class="drawer-search-input" id="searchMaterialInput" data-i18n-ph="phSearchMaterial" placeholder="搜尋影片名稱..." />
+            </div>
+            <!-- Dropdown Multi-Select Tag Filter Container -->
+            <div class="tag-dropdown-wrap" id="tagDropdownWrap">
+              <button class="tag-dropdown-btn" id="tagDropdownBtn" type="button" data-tooltip="勾選標籤進行多選篩選">
+                <span id="tagDropdownLabel">🏷️ 標籤篩選 (全部)</span>
+                <span>▾</span>
+              </button>
+              <div class="tag-dropdown-menu" id="tagDropdownMenu"></div>
+            </div>
+          </div>
+          <div class="drawer-list" id="materialListContainer">
+            <!-- Material Cards -->
+          </div>
+          <div class="drawer-footer-hint" data-i18n="drawerFooterHint">
+            👆 拖曳卡片至日期即可排課
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View 2: Theme Collections -->
+    <div class="view-content" id="viewTheme">
+      <div class="theme-view-container">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="font-weight:800; color:var(--primary-color)" data-i18n="themeTitle">💡 主題收藏庫與連結</h2>
+          <button class="btn-host-plan" id="btnAddThemeLink" data-i18n="btnAddTheme" data-tooltip="新增主題連結">+ 新增主題連結</button>
+        </div>
+        <div class="theme-grid" id="themeGridContainer"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal: Voluntary Support -->
+  <div class="modal-overlay" id="modalSupport">
+    <div class="modal-box support-modal-box">
+      <div class="modal-hdr">
+        <h3 id="supportModalHeaderTitle">💛 小小支持</h3>
+        <button class="modal-close-btn" data-close="modalSupport" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Screen 1: Support Form View -->
+        <div id="supportFormView">
+          <div class="support-modal-header">
+            <span class="support-modal-title" id="supportModalTitle">💛 給我們一點鼓勵</span>
+            <div class="support-currency-wrap">
+              <label id="lblCurrencyTag" for="selectSupportCurrency" style="font-size:0.82rem; font-weight:700; color:var(--text-dark);">幣別：</label>
+              <select id="selectSupportCurrency" class="support-currency-select">
+                <option value="TWD">NT$ 新台幣</option>
+                <option value="USD">US$ 美元</option>
+                <option value="JPY">JP¥ 日本円</option>
+                <option value="KRW">KR₩ 한국 원</option>
+                <option value="EUR">€ 歐元</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="support-intro-card" id="supportIntroCard">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- 4 Amount Cards Grid -->
+          <div class="support-amount-grid" id="supportAmountGrid"></div>
+
+          <!-- Anonymous Option Checkbox -->
+          <div class="support-anon-option">
+            <label class="support-checkbox-label">
+              <input type="checkbox" id="chkSupportShowNickname" checked />
+              <span id="labelAnonStatus">在感謝紀錄以暱稱顯示</span>
+            </label>
+          </div>
+
+          <!-- Main Submit Button -->
+          <button id="btnSubmitSupport" class="btn-submit-support">繼續免費使用（謝謝你的愛用！）</button>
+
+          <!-- Reassurance Footer -->
+          <div class="support-reassurance" id="supportReassuranceText">
+            🔒 完全自願，不綁定續訂，不影響任何會員與網站使用權益。
+          </div>
+        </div>
+
+        <!-- Screen 2: Loading Animation View -->
+        <div id="supportLoadingView" style="display:none; text-align:center; padding:2.5rem 1rem;">
+          <div class="support-spinner"></div>
+          <p style="font-weight:700; font-size:0.95rem; color:var(--text-dark); margin-top:1rem;">安全支付驗證中...</p>
+        </div>
+
+        <!-- Screen 3: Thank You View -->
+        <div id="supportThankView" style="display:none; text-align:center; padding:1.5rem 0.5rem;">
+          <div style="font-size:3rem; margin-bottom:0.6rem;">❤️</div>
+          <h3 id="supportThankTitle" style="font-weight:800; font-size:1.2rem; color:var(--primary-color); margin-bottom:0.8rem;">感謝你的支持！</h3>
+          <p id="supportThankMessage" style="font-size:0.9rem; color:var(--text-dark); line-height:1.6; margin-bottom:1.5rem;">
+            感謝你的使用！只要這個網站對你有用，對我們就是最好的肯定 😊
+          </p>
+          <button id="btnCloseSupportThank" data-close="modalSupport" style="background-color:var(--primary-color); color:#FFF; font-weight:800; padding:0.6rem 1.5rem;">完成關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Social Share -->
+  <div class="modal-overlay" id="modalShare">
+    <div class="modal-box" style="max-width:420px;">
+      <div class="modal-hdr">
+        <h3 id="modalShareTitle" data-i18n="modalShareTitle">分享至社群 ✨</h3>
+        <button class="modal-close-btn" data-close="modalShare" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body" style="padding:1.2rem 1rem;">
+        <div class="social-share-grid">
+          <button class="btn-share-social" id="btnShareLine">
+            <div class="share-icon-circle share-icon-line">
+              <svg viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.412-.105-.53-.285l-2.28-3.239v2.868c0 .344-.28.629-.629.629-.347 0-.627-.285-.627-.629V8.108c0-.27.174-.51.432-.596.064-.021.133-.031.199-.031.211 0 .412.105.53.285l2.28 3.239V8.108c0-.345.28-.63.629-.63.348 0 .629.285.629.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.62C24 4.757 18.627 0 12 0S0 4.757 0 10.62c0 5.26 4.28 9.68 10.063 10.428.391.084.924.258 1.059.592.12.302.079.776.039 1.082l-.171 1.027c-.053.303-.243 1.192 1.042.65 1.286-.542 6.942-4.089 9.475-6.992C23.048 15.346 24 13.09 24 10.62"/></svg>
+            </div>
+            <span>LINE</span>
+          </button>
+          <button class="btn-share-social" id="btnShareFb">
+            <div class="share-icon-circle share-icon-fb">
+              <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <span>Facebook</span>
+          </button>
+          <button class="btn-share-social" id="btnShareThreads">
+            <div class="share-icon-circle share-icon-threads">
+              <svg viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.582-.022-6.726-1.503-8.857-4.173-1.97-2.467-2.883-5.748-2.57-9.24.593-6.61 5.867-11.43 12.48-11.43 6.84 0 12.09 4.966 12.09 11.455 0 6.376-4.992 11.516-11.385 11.758v-2.036c4.954-.236 8.802-4.321 8.802-9.722 0-5.184-4.103-9.352-9.507-9.352-5.342 0-9.588 3.92-10.05 9.278-.242 2.753.472 5.34 2.012 7.28 1.666 2.09 4.148 3.25 6.985 3.267.006 0 .012 0 .018 0 3.32 0 6.082-1.97 6.945-4.952.12-.416.557-.655.973-.535.416.12.655.556.535.973-1.096 3.79-4.582 6.292-8.796 6.292zM12 16.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+            </div>
+            <span>Threads</span>
+          </button>
+          <button class="btn-share-social" id="btnShareX">
+            <div class="share-icon-circle share-icon-x">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </div>
+            <span>X (Twitter)</span>
+          </button>
+          <button class="btn-share-social" id="btnShareCopy">
+            <div class="share-icon-circle share-icon-copy" id="copyIconCircle">
+              <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+            <span id="lblCopyBtn" data-i18n="btnCopyLink">複製連結</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Material -->
+  <div class="modal-overlay" id="modalMaterial">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <h3 id="modalMaterialTitle" data-i18n="modalMaterialAdd">新增教材 / 課程</h3>
+        <button class="modal-close-btn" data-close="modalMaterial" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label data-i18n="lblMatTitle">課程 / 影片標題 *</label>
+          <input type="text" class="form-control" id="matInputTitle" placeholder="例如：陳月卿起床操" />
+        </div>
+        <div class="form-group">
+          <label data-i18n="lblMatUrl">影片 / 資源網址（支援多集網址 +）</label>
+          <div id="urlInputContainer" style="display:flex; flex-direction:column; gap:0.4rem;"></div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="lblMatCategory">自訂分類標籤（以逗號或空格分隔多個標籤）</label>
+          <input type="text" class="form-control" id="matInputTag" placeholder="例如：晨起操, 伸展, 有氧" />
+        </div>
+      </div>
+      <div class="modal-ftr">
+        <button data-close="modalMaterial" data-i18n="btnCancel">取消</button>
+        <button id="btnSaveMaterial" data-i18n="btnSave" style="background-color:var(--primary-color); color:#fff;">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Schedule Course -->
+  <div class="modal-overlay" id="modalSchedule">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <h3 data-i18n="modalScheduleTitle">排定課程</h3>
+        <button class="modal-close-btn" data-close="modalSchedule" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label data-i18n="lblSelectMaterial">選擇教材 *</label>
+          <select class="form-control" id="schedSelectMaterial"></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="lblDate">日期 *</label>
+          <input type="date" class="form-control" id="schedInputDate" />
+        </div>
+        <div class="form-group" style="display:flex; gap:0.5rem;">
+          <div style="flex:1">
+            <label data-i18n="lblStartTime">開始時間</label>
+            <input type="time" class="form-control" id="schedStartTime" value="07:00" />
+          </div>
+          <div style="flex:1">
+            <label data-i18n="lblEndTime">結束時間</label>
+            <input type="time" class="form-control" id="schedEndTime" value="07:30" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="lblRepeat">重複週期規則</label>
+          <select class="form-control" id="schedRepeatType">
+            <option value="none" data-i18n="repeatNone">不重複（僅限當天）</option>
+            <option value="daily" data-i18n="repeatDaily">每天重複</option>
+            <option value="every2days" data-i18n="repeatEvery2Days">每 2 天重複</option>
+            <option value="every3days" data-i18n="repeatEvery3Days">每 3 天重複</option>
+            <option value="weekly" data-i18n="repeatWeekly">每週重複</option>
+            <option value="every2weeks">每 2 週重複</option>
+            <option value="monthly" data-i18n="repeatMonthly">每月固定幾號重複</option>
+          </select>
+        </div>
+        <div class="form-group" id="groupMonthlyDay" style="display:none;">
+          <label>每月幾號重複 (1 ~ 31)</label>
+          <input type="number" class="form-control" id="schedMonthlyDay" min="1" max="31" value="15" />
+        </div>
+      </div>
+      <div class="modal-ftr">
+        <button data-close="modalSchedule" data-i18n="btnCancel">取消</button>
+        <button id="btnSaveSchedule" data-i18n="btnSave" style="background-color:var(--primary-color); color:#fff;">確認排入</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Schedule Time & Repeat Rules -->
+  <div class="modal-overlay" id="modalEditScheduleTime">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <h3>編輯排程時間與週期規則</h3>
+        <button class="modal-close-btn" data-close="modalEditScheduleTime" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editSchedId" />
+        <input type="hidden" id="editTargetDateIso" />
+        <div class="form-group">
+          <label>播放時間（可留空代表無固定時間）</label>
+          <input type="time" class="form-control" id="editSchedTime" />
+        </div>
+        <div class="form-group">
+          <label>重複週期規則</label>
+          <select class="form-control" id="editSchedRepeatType">
+            <option value="none">不重複（僅限當天）</option>
+            <option value="daily">每天重複</option>
+            <option value="every2days">每 2 天重複</option>
+            <option value="every3days">每 3 天重複</option>
+            <option value="weekly">每週重複</option>
+            <option value="every2weeks">每 2 週重複</option>
+            <option value="monthly">每月固定幾號重複</option>
+          </select>
+        </div>
+        <div class="form-group" id="editGroupMonthlyDay" style="display:none;">
+          <label>每月幾號重複 (1 ~ 31)</label>
+          <input type="number" class="form-control" id="editSchedMonthlyDay" min="1" max="31" value="15" />
+        </div>
+      </div>
+      <div class="modal-ftr">
+        <button id="btnDeleteSchedInModal" style="color:#D32F2F;" data-tooltip="刪除此排程">刪除此排程</button>
+        <button data-close="modalEditScheduleTime">取消</button>
+        <button id="btnSaveSchedTime" style="background-color:var(--primary-color); color:#fff;">確認保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Recurrence Confirmation Dialog -->
+  <div class="modal-overlay" id="modalRecurrenceConfirm">
+    <div class="modal-box" style="max-width:440px;">
+      <div class="modal-hdr">
+        <h3 id="recurrenceConfirmTitle">週期排程變更確認</h3>
+        <button class="modal-close-btn" data-close="modalRecurrenceConfirm" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body" style="text-align:center; padding:1.2rem 1rem;">
+        <p id="recurrenceConfirmMessage" style="font-size:0.92rem; font-weight:700; color:var(--text-dark); line-height:1.5; margin-bottom:1.2rem;">
+          這是一門週期性重複的課程，請問您希望如何套用變更？
+        </p>
+        <div style="display:flex; flex-direction:column; gap:0.65rem;">
+          <button id="btnConfirmOpt1" style="background-color:#FFF8E1; color:#B78103; border:1px solid #FFE082; font-weight:800; padding:0.65rem; border-radius:8px;">【僅修改本日】</button>
+          <button id="btnConfirmOpt2" style="background-color:var(--primary-color); color:#FFF; border:none; font-weight:800; padding:0.65rem; border-radius:8px;">【變更本日及往後所有週期】</button>
+          <button id="btnConfirmCancel" data-close="modalRecurrenceConfirm" style="padding:0.5rem; color:var(--text-muted); background:transparent; border:none;">【取消】</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Video Player -->
+  <div class="modal-overlay" id="modalVideo">
+    <div class="modal-box video-modal-box">
+      <div class="modal-hdr">
+        <h3 id="videoModalTitle">影片播放器</h3>
+        <button class="modal-close-btn" data-close="modalVideo" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="video-player-container">
+          <iframe id="videoIframe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="video-playlist-bar">
+          <div class="video-playlist" id="videoPlaylist"></div>
+          <!-- <a id="btnOpenExternalVideo" href="#" target="_blank" class="btn-external-link">🔗 在新分頁開啟影片</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Redesigned Member Center with Neumorphic Buttons & 9 Accordion Items -->
+  <div class="modal-overlay" id="modalMember">
+    <div class="modal-box member-modal-box">
+      <div class="modal-hdr">
+        <h3 data-i18n="modalMemberTitle">👤 會員中心</h3>
+        <button class="modal-close-btn" data-close="modalMember" data-tooltip="關閉視窗">✕</button>
+      </div>
+      <div class="modal-body" style="padding:1rem;">
+        
+        <!-- Top Neumorphic / 3D Raised Buttons Bar -->
+        <div class="neu-btn-group">
+          <button class="neu-btn" id="btnShowLogin" data-i18n="neuBtnLogin" data-tooltip="切換登入表單">👤 登入帳號</button>
+          <button class="neu-btn" id="btnShowRegister" data-i18n="neuBtnRegister" data-tooltip="切換註冊表單">✨ 註冊新會員</button>
+        </div>
+
+        <!-- Auth Form Panel (Expandable / Collapsible) -->
+        <div class="member-auth-card" id="authFormContainer" style="display:none; flex-direction:column; gap:14px; padding:16px;">
+          <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-weight:700; font-size:0.88rem; color:#4A3B32;" data-i18n="lblAuthAccount">使用者代號 *</label>
+            <input type="text" class="form-control" id="userAuthAccount" data-i18n-ph="phAuthAccount" placeholder="請輸入代號..." style="padding:10px 12px; border:1.5px solid #D8C3AC; border-radius:8px; font-size:0.9rem;" />
+          </div>
+          <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-weight:700; font-size:0.88rem; color:#4A3B32;" data-i18n="lblAuthPassword">自訂密碼 *</label>
+            <input type="password" class="form-control" id="userAuthPassword" data-i18n-ph="phAuthPassword" placeholder="請輸入密碼..." style="padding:10px 12px; border:1.5px solid #D8C3AC; border-radius:8px; font-size:0.9rem;" />
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:4px;">
+            <button type="button" class="btn-cancel" id="btnAuthCancel" data-i18n="btnAuthCancel" style="padding:0.4rem 0.8rem; font-size:0.82rem;">收起</button>
+            <button type="button" class="btn-primary" id="btnAuthSubmit" data-i18n="btnAuthSubmit" style="background-color:var(--primary-color); color:#fff; font-weight:800; font-size:0.82rem; padding:0.4rem 1rem;">確認提交</button>
+          </div>
+        </div>
+
+        <!-- Logged In Status Banner -->
+        <div class="member-auth-card" id="loggedInStatus" style="display:none; text-align:center; background-color:#E8F5E9; border-color:#C8E6C9;">
+          <div style="font-weight:800; color:#2E7D32; font-size:0.88rem;" id="lblLoggedInUser">歡迎回來，養成計畫學員！</div>
+          <div style="font-size:0.75rem; color:#4B8B3B; margin-top:2px;">已成功啟用本機與跨裝置同步</div>
+          <button id="btnLogoutUser" data-i18n="btnLogout" style="margin:0.4rem auto 0 auto; background-color:#FFF; border:1px solid #A5D6A7; color:#2E7D32; font-weight:700; font-size:0.75rem; padding:0.25rem 0.75rem;">登出帳號</button>
+        </div>
+
+        <!-- Backup Action Buttons Row -->
+        <div class="backup-btn-row">
+          <button class="btn-backup-action" id="btnExportBackup" data-i18n="btnExportBackup" data-tooltip="將目前的課程與排程備份下載至電腦">
+            📦 下載排程備份檔 (JSON)
+          </button>
+          <button class="btn-backup-action" id="btnImportBackup" data-i18n="btnImportBackup" data-tooltip="由備份檔還原課程與排程">
+            📥 匯入排程備份檔
+          </button>
+          <input type="file" id="fileImportBackup" accept=".json" style="display:none;" />
+        </div>
+
+        <!-- 9 Accordion Items -->
+        <div class="member-accordion">
+          
+          <!-- Item 1 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle1">🌿 為什麼要做這個？</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent1">
+                <p><strong>活得長，更要活得好</strong></p>
+                <p>看著父母慢慢年老才體會到：現代人活得久，但身體功能（視力、肌力、吞嚥、咀嚼、平衡）往往慢慢跟不上。</p>
+                <p>如果提早十年、二十年就開始練習微運動呢？網路上很多好影音，只是收藏了卻很少做。「聚✨養成計畫」就是幫你把想做的事，排進每日作息裡。5 分鐘也好，慢慢變成習慣。</p>
+                <p style="margin-top:0.4rem; font-style:italic; color:var(--accent-color);">「照顧好身體，是給未來的自己最好的禮物。」</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle2">☁️ 會員帳號與跨裝置同步</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent2">
+                註冊只需自訂一組<strong>使用者代號與密碼</strong>。登入同一組帳號後，可在不同電腦、手機或平板間無縫同步自己的教材庫、分類標籤、週排程與打勾完成狀態。
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle3">🔑 很重要：忘記帳密真的救不回來</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent3">
+                <p>我們完全不要求提供 Email、手機或真實姓名。因此一旦忘記帳密，<strong>無法為您重設或找回</strong>！</p>
+                <p>💡 <strong>備份是最後保險</strong>：請善用「下載排程備份檔 (JSON)」，將課表留存本機。忘記密碼時，只要註冊新代號並匯入備份檔即可秒速復原。</p>
+                <p>⏰ <strong>帳號清理提醒</strong>：連續超過 6 個月無使用紀錄之帳號可能被系統清除，久未登入前請務必先下載備份檔保存。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle4">🔒 我們盡量少知道你的事</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent4">
+                <p><strong>原則：能不收，就不收。</strong></p>
+                <p>不蒐集真實姓名、Email、手機、地址或身分證件。我們希望你來這裡是為了安排健康作息，而不是留下個資。詳情請參閱底部的隱私說明。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle5">🌱 最後，想跟你說</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent5">
+                我們不是要你突然變成自律大師，只是希望幫你把「一直想做卻沒做到」的事情，一點一點放進生活裡。希望很多年後回頭看，我們都會慶幸當年的自己有好好照顧現在的自己。💛
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle6">📌 使用前請先知道</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent6">
+                <p>• 本平台為影音整理與習慣養成工具，健康運動影音不取代專業醫師診斷與治療。</p>
+                <p>• 請依個人體能評估活動，特殊需求請先諮詢醫療專業。</p>
+                <p>• 帳密請務必記好並定期備份，連續 6 個月無活動之帳號可能被定期清理。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 7 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle7">📊 我們會分析你的資料嗎？</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent7">
+                目前不會針對個人帳號進行分析。未來若有餘力，可能會以<strong>完全去識別化、彙總統計</strong>方式了解大眾趨勢（如哪些影片/標籤受歡迎、時段分佈），以改善推薦。絕不用於建立個人健康檔案，亦無法識別個人身分。目前尚未實作。
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 8 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle8">💛 永遠免費，也歡迎小小支持</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent8">
+                <p><strong>不收月費、不收年費、不強迫綁約。</strong></p>
+                <p>主機運作仍需成本，若覺得有幫助，歡迎透過「💛 小小支持」給點零錢鼓勵（最高不超過 NT$100）。</p>
+                <p>我也快面對退休年紀了 😂，有一點零錢收入能讓我更有動力維護；若沒有，為了生存大概得去麥當勞翻薯條，更新就只能看緣分了！</p>
+                <p style="color:#C62828;">⚠️ 小本經營人力有限，支持款純屬自願心意，<strong>贊助後恕無法提供退費</strong>，請確認負擔得起且發自內心想支持再進行，萬分感謝體諒！</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 9 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="accTitle9">📦 你的資料，你可以帶走</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" data-i18n-html="accContent9">
+                你建立的教材與排程屬於你個人。隨時可點擊「下載排程備份檔 (JSON)」存回自己的設備。你的生活計畫絕不會被綁在我們這裡。
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 10: 完整個人資料保護與隱私權政策 (純繁體中文，置於「📦 你的資料，你可以帶走」後) -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button">
+              <span>🔒 查看完整「個人資料保護與隱私權政策」</span>
+              <span class="acc-arrow">▾</span>
+            </button>
+            <div class="accordion-content">
+              <div class="acc-inner" style="font-size:0.8rem; line-height:1.6; color:#444; max-height:380px; overflow-y:auto; padding-right:6px;">
+                <p style="font-size:0.75rem; color:#888; margin-bottom:0.6rem;">最後更新日期：2026 年 10 月 2 日</p>
+                
+                <p>「聚✨養成計畫」（以下簡稱「本平台」）重視您的隱私。我們希望您來這裡，是為了安排自己的生活、養成想要的習慣，而不是為了留下大量個人資料。</p>
+                
+                <blockquote style="margin:0.5rem 0; padding:0.4rem 0.8rem; background:#F0EBE1; border-left:3px solid var(--accent-color); font-weight:700; color:var(--primary-color);">
+                  能不收，就不收；需要的才收。
+                </blockquote>
+
+                <p style="margin-top:0.6rem;"><strong>一、我們會蒐集哪些資料？</strong><br>
+                註冊時僅需設定「使用者代號」與「密碼」。使用時系統保存您主動建立的資料（收藏影片連結、自訂標籤、生活排程、打勾狀態），純粹用以登入、跨裝置同步與日常計畫使用。</p>
+
+                <p style="margin-top:0.6rem;"><strong>二、我們不要求您提供什麼？</strong><br>
+                不要求真實姓名、Email、手機號碼、通訊地址或身分證字號。因此若忘記帳號或密碼，無法透過 Email 或手機協助重設，請務必記好帳密。</p>
+
+                <p style="margin-top:0.6rem;"><strong>三、密碼與帳號安全</strong><br>
+                密碼絕不以明文保存，均經適當安全雜湊處理，管理人員無法直接查閱原始密碼。請妥善保管帳密，避免與他人共用。</p>
+
+                <p style="margin-top:0.6rem;"><strong>四、我們會追蹤您嗎？</strong><br>
+                僅使用必要之 Cookie、LocalStorage 維持登入連線與網站設定。<strong>絕不進行第三方商業廣告追蹤</strong>，亦不建立跨網站行為檔案。</p>
+
+                <p style="margin-top:0.6rem;"><strong>五、您的資料會拿去做什麼？</strong><br>
+                資料僅供系統運作與備份使用。目前尚未實作個人使用行為分析；未來若有餘力，僅可能以「去識別化、彙總統計」了解影音熱門趨勢以改善內容，絕不用於建立個人健康檔案，亦不辨識特定個人。</p>
+
+                <p style="margin-top:0.6rem;"><strong>六、第三方服務</strong><br>
+                使用必要的雲端託管、影音或付款服務。當透過 YouTube 播放影音時，由 YouTube 依其隱私政策處理，本平台不索取您在該平台的完整觀看隱私紀錄。</p>
+
+                <p style="margin-top:0.6rem;"><strong>七、資料保存與帳號刪除（6 個月未登入清理）</strong><br>
+                若會員帳號<strong>連續超過 6 個月沒有任何使用紀錄</strong>，系統可能會將該帳號及其相關資料清除。請務必定期使用「下載排程備份檔 (JSON)」留存於本機裝置。</p>
+
+                <p style="margin-top:0.6rem;"><strong>八、資料可以帶走嗎？</strong><br>
+                可以。您建立的教材庫與每週排程完全歸您所有，可隨時匯出 JSON 備份檔，您的生活計畫絕不會被綁在我們這裡。</p>
+
+                <p style="margin-top:0.6rem;"><strong>九、您的個人資料權利</strong><br>
+                您依法享有查詢、閱覽、補充、更正、停止處理及請求刪除等權利。重大條款變更將於網站適當位置公告。</p>
+
+                <p style="margin-top:0.6rem;"><strong>十、政策更新</strong><br>
+                本平台可能因應法令、功能或架構變化修改本政策，重大變更將於網站適當位置公告。</p>
+
+                <p style="margin-top:0.8rem; border-top:1px dashed #D6CEBE; padding-top:0.6rem; font-style:italic; color:var(--primary-color);">
+                  🌿 我們不需要知道你是誰，也不需要知道你的生活細節。我們只希望讓網站正常運作，陪伴你把想做的事排進生活裡。
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-ftr">
+        <button data-close="modalMember" data-i18n="btnClose">關閉</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Engine -->
+  <script>
+    // --- 1.0 Full i18n Multi-Language Dictionary Engine ---
+    const i18nData = {
+      'zh-TW': {
+        mainTitle: '聚✨養成計畫',
+        navScheduler: '週看板',
+        navTheme: '主題收藏庫',
+        btnMember: '👤 會員中心',
+        btnSupportUs: '💛 小小支持',
+        tooltipMember: '會員中心',
+        tooltipShare: '分享',
+        tooltipVoiceIntro: '欸？為什麼我們做這個？',
+        tooltipSupport: '喜歡這個工具嗎？歡迎給我們一點小鼓勵 😊',
+        btnHostPlan: '✨ 看樓主的養成計畫',
+        btnExitHost: '↩️ 回到我的行事曆',
+        drawerTitle: '📗 教材庫',
+        phSearchMaterial: '搜尋影片名稱...',
+        btnAddMaterial: '+ 新增教材',
+        drawerFooterHint: '👆 拖曳卡片至日期即可排課',
+        themeTitle: '💡 主題收藏庫與連結',
+        btnAddTheme: '+ 新增主題連結',
+        modalMemberTitle: '👤 會員中心',
+        modalShareTitle: '分享至社群 ✨',
+        btnCopyLink: '複製連結',
+        linkCopiedBtn: '已複製！✓',
+        modalMaterialAdd: '新增教材 / 課程',
+        lblMatTitle: '課程 / 影片標題 *',
+        lblMatUrl: '影片 / 資源網址（支援多集網址 +）',
+        lblMatCategory: '自訂分類標籤（以逗號或空格分隔多個標籤）',
+        btnCancel: '取消',
+        btnSave: '保存',
+        modalScheduleTitle: '排定課程',
+        lblSelectMaterial: '選擇教材 *',
+        lblDate: '日期 *',
+        lblStartTime: '開始時間',
+        lblEndTime: '結束時間',
+        lblRepeat: '重複週期規則',
+        repeatNone: '不重複（僅限當天）',
+        repeatDaily: '每天重複',
+        repeatEvery2Days: '每 2 天重複',
+        repeatEvery3Days: '每 3 天重複',
+        repeatWeekly: '每週重複',
+        repeatMonthly: '每月固定幾號重複',
+        days: ['週日', '週一', '週二', '週三', '週四', '週五', '週六'],
+        completedProgressLabel: '本週累計完成：',
+        videoUnit: '部影片',
+        btnClose: '關閉'
+      },
+      'en': {
+        mainTitle: 'JU✨Making Plan',
+        navScheduler: 'Scheduler',
+        navTheme: 'Theme Library',
+        btnMember: '👤 Member Center',
+        btnSupportUs: '💛 Support Us',
+        tooltipMember: 'Member Center',
+        tooltipShare: 'Share',
+        tooltipVoiceIntro: 'Wait, why did we build this?',
+        tooltipSupport: 'Enjoying this tool? Feel free to give us a little encouragement 😊',
+        btnHostPlan: "✨ Host's Plan",
+        btnExitHost: '↩️ Back to My Calendar',
+        drawerTitle: '📗 Materials Library',
+        phSearchMaterial: 'Search materials...',
+        btnAddMaterial: '+ Add Material',
+        drawerFooterHint: '👆 Drag cards onto a date column to schedule',
+        themeTitle: '💡 Theme Collections & Links',
+        btnAddTheme: '+ Add Theme Link',
+        modalMemberTitle: '👤 Member Center',
+        modalShareTitle: 'Share to Social ✨',
+        btnCopyLink: 'Copy Link',
+        linkCopiedBtn: 'Copied! ✓',
+        modalMaterialAdd: 'Add Material / Course',
+        lblMatTitle: 'Course / Video Title *',
+        lblMatUrl: 'Video / Resource URLs',
+        lblMatCategory: 'Custom Tags (comma separated)',
+        btnCancel: 'Cancel',
+        btnSave: 'Save',
+        modalScheduleTitle: 'Schedule Course',
+        lblSelectMaterial: 'Select Material *',
+        lblDate: 'Date *',
+        lblStartTime: 'Start Time',
+        lblEndTime: 'End Time',
+        lblRepeat: 'Repeat Interval',
+        repeatNone: 'None (Today Only)',
+        repeatDaily: 'Everyday',
+        repeatEvery2Days: 'Every 2 Days',
+        repeatEvery3Days: 'Every 3 Days',
+        repeatWeekly: 'Weekly',
+        repeatMonthly: 'Monthly',
+        days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        completedProgressLabel: 'Completed this week: ',
+        videoUnit: 'videos',
+        btnClose: 'Close'
+      },
+      'ja': {
+        mainTitle: '聚✨養成計画',
+        navScheduler: '週間ボード',
+        navTheme: 'テーマコレクション',
+        btnMember: '👤 メンバー',
+        btnSupportUs: '💛 応援する',
+        tooltipMember: 'メンバーセンター',
+        tooltipShare: 'シェア',
+        tooltipVoiceIntro: 'なぜこれを作ったの？',
+        tooltipSupport: 'このツールを気に入っていただけましたか？応援していただけると嬉しいです 😊',
+        btnHostPlan: '✨ 主催者の計画',
+        btnExitHost: '↩️ カレンダーに戻る',
+        drawerTitle: '📗 教材ライブラリ',
+        phSearchMaterial: '検索...',
+        btnAddMaterial: '+ 教材追加',
+        drawerFooterHint: '👆 カードを日付にドラッグしてスケジュール設定',
+        themeTitle: '💡 テーマコレクションとリンク',
+        btnAddTheme: '+ テーマ追加',
+        modalMemberTitle: '👤 メンバーセンター',
+        modalShareTitle: 'SNSで共有 ✨',
+        btnCopyLink: 'リンクをコピー',
+        linkCopiedBtn: 'コピー完了！✓',
+        modalMaterialAdd: '教材追加',
+        lblMatTitle: 'タイトル *',
+        lblMatUrl: '動画URL',
+        lblMatCategory: 'タグ',
+        btnCancel: 'キャンセル',
+        btnSave: '保存',
+        modalScheduleTitle: 'スケジュール設定',
+        lblSelectMaterial: '教材選択 *',
+        lblDate: '日付 *',
+        lblStartTime: '開始時間',
+        lblEndTime: '終了時間',
+        lblRepeat: '繰り返し',
+        repeatNone: 'なし',
+        repeatDaily: '毎日',
+        repeatEvery2Days: '2日ごと',
+        repeatEvery3Days: '3日ごと',
+        repeatWeekly: '毎週',
+        repeatMonthly: '毎月',
+        days: ['日', '月', '火', '水', '木', '金', '土'],
+        completedProgressLabel: '今週の完了：',
+        videoUnit: '本',
+        btnClose: '閉じる'
+      },
+      'ko': {
+        mainTitle: '聚✨육성 계획',
+        navScheduler: '주간 보드',
+        navTheme: '테마 보관함',
+        btnMember: '👤 회원센터',
+        btnSupportUs: '💛 작은 응원',
+        tooltipMember: '회원 센터',
+        tooltipShare: '공유',
+        tooltipVoiceIntro: '우리가 이것을 만든 이유?',
+        tooltipSupport: '이 도구가 마음에 드시나요? 작은 응원을 보내주세요 😊',
+        btnHostPlan: '✨ 주최자의 계획',
+        btnExitHost: '↩️ 내 달력으로 돌아가기',
+        drawerTitle: '📗 교재 보관함',
+        phSearchMaterial: '검색...',
+        btnAddMaterial: '+ 교재 추가',
+        drawerFooterHint: '👆 카드를 날짜로 드래그하여 일정 추가',
+        themeTitle: '💡 테마 보관함 & 링크',
+        btnAddTheme: '+ 테마 추가',
+        modalMemberTitle: '👤 회원센터',
+        modalShareTitle: 'SNS 공유 ✨',
+        btnCopyLink: '링크 복사',
+        linkCopiedBtn: '복사 완료! ✓',
+        modalMaterialAdd: '교재 추가',
+        lblMatTitle: '제목 *',
+        lblMatUrl: '동영상 URL',
+        lblMatCategory: '태그',
+        btnCancel: '취소',
+        btnSave: '저장',
+        modalScheduleTitle: '일정 추가',
+        lblSelectMaterial: '교재 선택 *',
+        lblDate: '날짜 *',
+        lblStartTime: '시작 시간',
+        lblEndTime: '종료 시간',
+        lblRepeat: '반복',
+        repeatNone: '없음',
+        repeatDaily: '매일',
+        repeatEvery2Days: '2일마다',
+        repeatEvery3Days: '3일마다',
+        repeatWeekly: '매주',
+        repeatMonthly: '매월',
+        days: ['일', '월', '화', '수', '목', '금', '토'],
+        completedProgressLabel: '이번 주 누적 완료: ',
+        videoUnit: '개',
+        btnClose: '닫기'
+      },
+      'es': {
+        mainTitle: 'Plan JU✨',
+        navScheduler: 'Planificador',
+        navTheme: 'Colecciones',
+        btnMember: '👤 Mi Cuenta',
+        btnSupportUs: '💛 Apoyarnos',
+        tooltipMember: 'Centro de miembros',
+        tooltipShare: 'Compartir',
+        tooltipVoiceIntro: '¿Por qué creamos esto?',
+        tooltipSupport: '¿Te gusta esta herramienta? Siéntete libre de darnos un pequeño apoyo 😊',
+        btnHostPlan: '✨ Plan del Anfitrión',
+        btnExitHost: '↩️ Volver a mi calendario',
+        drawerTitle: '📗 Biblioteca',
+        phSearchMaterial: 'Buscar...',
+        btnAddMaterial: '+ Añadir Material',
+        drawerFooterHint: '👆 Arrastra las tarjetas a una fecha para programar',
+        themeTitle: '💡 Colecciones y Enlaces',
+        btnAddTheme: '+ Añadir Tema',
+        modalMemberTitle: '👤 Centro de Miembros',
+        modalShareTitle: 'Compartir en Redes ✨',
+        btnCopyLink: 'Copiar Enlace',
+        linkCopiedBtn: '¡Copiado! ✓',
+        modalMaterialAdd: 'Añadir Material',
+        lblMatTitle: 'Título *',
+        lblMatUrl: 'URL del Vídeo',
+        lblMatCategory: 'Etiquetas',
+        btnCancel: 'Cancelar',
+        btnSave: 'Guardar',
+        modalScheduleTitle: 'Programar Clase',
+        lblSelectMaterial: 'Seleccionar Material *',
+        lblDate: 'Fecha *',
+        lblStartTime: 'Hora Inicio',
+        lblEndTime: 'Hora Fin',
+        lblRepeat: 'Repetir',
+        repeatNone: 'Ninguno',
+        repeatDaily: 'Todos los días',
+        repeatEvery2Days: 'Cada 2 días',
+        repeatEvery3Days: 'Cada 3 días',
+        repeatWeekly: 'Semanal',
+        repeatMonthly: 'Mensual',
+        days: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+        completedProgressLabel: 'Completados esta semana: ',
+        videoUnit: 'vídeos',
+        btnClose: 'Cerrar'
+      }
+    };
+
+    let currentLang = 'zh-TW';
+
+    // --- Voluntary Support Multi-Currency Dictionary ---
+    const SUPPORT_I18N_DATA = {
+      'TWD': {
+        currencyCode: 'TWD',
+        currencyTag: '幣別：',
+        title: '💛 給我們一點鼓勵',
+        intro: [
+          '如果這個工具對你的生活或學習有幫助，請讓我們知道 😊',
+          '我們是兩個人一起慢慢打造「聚✨養成計畫」的。這個網站所有功能都是免費的，不論支持與否，你都能完整使用所有功能。',
+          '如果你覺得用得很順心，願意給我們一點實質鼓勵，這會成為我們持續維護與改進的最大動力！'
+        ],
+        amounts: [
+          { amount: 0, label: 'NT$ 0', note: '完全免費使用' },
+          { amount: 30, label: 'NT$ 30', note: '請喝一口茶' },
+          { amount: 66, label: 'NT$ 66', note: '溫暖鼓勵' },
+          { amount: 88, label: 'NT$ 88', note: '熱情滿滿' }
+        ],
+        anonNickname: '在感謝紀錄以暱稱顯示',
+        anonOnly: '保持完全匿名',
+        btnFree: '繼續免費使用（謝謝你的愛用！）',
+        btnPay: (val) => `前往支持 NT$ ${val}`,
+        reassurance: '🔒 完全自願，不綁定續訂，不影響任何會員與網站使用權益。',
+        thankFreeTitle: '感謝你的愛用！😊',
+        thankFreeMsg: '感謝你的使用！只要這個網站對你有用，對我們就是最好的肯定 😊',
+        thankPayTitle: '太感謝你的支持了！❤️',
+        thankPayMsg: '太感謝你的支持了！❤️ 你的這份心意讓我們充滿力量！'
+      },
+      'USD': {
+        currencyCode: 'USD',
+        currencyTag: 'Currency:',
+        title: '💛 Support Us',
+        intro: [
+          'If this tool helps your daily life or learning, please let us know 😊',
+          'We are a small team of two building "JU Plan" step by step. All features here are completely free.',
+          'If you find it helpful and would like to give us a little encouragement, it means the world to us!'
+        ],
+        amounts: [
+          { amount: 0, label: 'US$ 0', note: 'Free to use' },
+          { amount: 1, label: 'US$ 1', note: 'Buy us a tea' },
+          { amount: 2, label: 'US$ 2', note: 'Warm support' },
+          { amount: 3, label: 'US$ 3', note: 'Full of energy' }
+        ],
+        anonNickname: 'Show nickname in log',
+        anonOnly: 'Keep completely anonymous',
+        btnFree: 'Continue for Free',
+        btnPay: (val) => `Support US$ ${val}`,
+        reassurance: '🔒 Completely voluntary. No auto-renewal, no effect on member benefits.',
+        thankFreeTitle: 'Thank you for using JU! 😊',
+        thankFreeMsg: 'Thank you for using our app! As long as it helps you, it is our best reward 😊',
+        thankPayTitle: 'Thank you so much! ❤️',
+        thankPayMsg: 'Thank you so much for your support! ❤️ Your generosity gives us immense strength!'
+      },
+      'JPY': {
+        currencyCode: 'JPY',
+        currencyTag: '通貨：',
+        title: '💛 応援・サポート',
+        intro: [
+          'このツールがあなたの生活や学びに役立ちましたら、ぜひ教えてください 😊',
+          '私たちは2人でこの「聚✨プラン」を丁寧に開発しています。すべての機能は完全無料です。',
+          'もし気に入っていただけて、少しの励ましをいただけるなら、今後の励みになります！'
+        ],
+        amounts: [
+          { amount: 0, label: 'JP¥ 0', note: '完全無料' },
+          { amount: 150, label: 'JP¥ 150', note: 'お茶一杯' },
+          { amount: 300, label: 'JP¥ 300', note: '温かい応援' },
+          { amount: 500, label: 'JP¥ 500', note: '最大の力に' }
+        ],
+        anonNickname: '感謝記録にニックネームを表示する',
+        anonOnly: '完全匿名にする',
+        btnFree: '無料で使い続ける',
+        btnPay: (val) => `JP¥ ${val} をサポート`,
+        reassurance: '🔒 完全任意です。定期購入はなく、利用権限に影響はありません。',
+        thankFreeTitle: 'ご利用ありがとうございます！😊',
+        thankFreeMsg: 'ご利用いただきありがとうございます！お役に立てることが私たちの最大の喜びです 😊',
+        thankPayTitle: '温かいサポートに感謝します！❤️',
+        thankPayMsg: '温かいご支援をいただき本当にありがとうございます！❤️ 大変励みになります！'
+      },
+      'KRW': {
+        currencyCode: 'KRW',
+        currencyTag: '통화：',
+        title: '💛 작은 응원 보내기',
+        intro: [
+          '이 사이트가 일상이나 학습에 도움이 되었다면 알려주세요 😊',
+          '저희는 두 사람이 함께 "Ju 플랜"을 만들어가고 있습니다. 모든 기능은 완전 무료입니다.',
+          '유용하게 사용하고 계시다면, 작은 응원으로 저희에게 힘을 보태주세요!'
+        ],
+        amounts: [
+          { amount: 0, label: 'KR₩ 0', note: '완전 무료' },
+          { amount: 1500, label: 'KR₩ 1,500', note: '차 한잔' },
+          { amount: 3000, label: 'KR₩ 3,000', note: '따뜻한 응원' },
+          { amount: 5000, label: 'KR₩ 5,000', note: '든든한 힘' }
+        ],
+        anonNickname: '감사 기록에 닉네임 표시',
+        anonOnly: '완전 익명으로 남기기',
+        btnFree: '무료로 계속 이용하기',
+        btnPay: (val) => `KR₩ ${val.toLocaleString()} 지원하기`,
+        reassurance: '🔒 자발적 지원이며 정기 결제가 없고, 이용 권한에 영향을 주지 않습니다.',
+        thankFreeTitle: '이용해 주셔서 감사합니다! 😊',
+        thankFreeMsg: '이용해 주셔서 감사합니다! 도움이 되었다면 그것만으로도 저희에겐 큰 기쁨입니다 😊',
+        thankPayTitle: '따뜻한 응원에 감사드립니다! ❤️',
+        thankPayMsg: '따뜻한 후원에 진심으로 감사드립니다! ❤️ 정말 큰 힘이 됩니다!'
+      },
+      'EUR': {
+        currencyCode: 'EUR',
+        currencyTag: 'Moneda:',
+        title: '💛 Apoyarnos',
+        intro: [
+          'Si esta herramienta ayuda a tu vida o aprendizaje, por favor háznoslo saber 😊',
+          'Somos un equipo de dos creando "Plan JU" paso a paso. Todas las funciones son completamente gratuitas.',
+          'Si lo encuentras útil y deseas darnos un pequeño impulso, ¡significa todo para nosotros!'
+        ],
+        amounts: [
+          { amount: 0, label: '€ 0', note: 'Uso gratuito' },
+          { amount: 1, label: '€ 1', note: 'Un café o té' },
+          { amount: 2, label: '€ 2', note: 'Apoyo cálido' },
+          { amount: 3, label: '€ 3', note: 'Lleno de energía' }
+        ],
+        anonNickname: 'Mostrar apodo en registro',
+        anonOnly: 'Mantener totalmente anónimo',
+        btnFree: 'Continuar gratis',
+        btnPay: (val) => `Apoyar € ${val}`,
+        reassurance: '🔒 Completamente voluntario. Sin renovación automática, sin efecto en beneficios.',
+        thankFreeTitle: '¡Gracias por usar Plan JU! 😊',
+        thankFreeMsg: '¡Gracias por usar nuestra aplicación! Mientras te sea útil, es nuestra mejor recompensa 😊',
+        thankPayTitle: '¡Muchas gracias por tu apoyo! ❤️',
+        thankPayMsg: '¡Muchas gracias por tu generosidad! ❤️ ¡Nos da una fuerza inmensa!'
+      }
+    };
+
+    const LANG_TO_CURRENCY_MAP = {
+      'zh-TW': 'TWD',
+      'en': 'USD',
+      'ja': 'JPY',
+      'ko': 'KRW',
+      'es': 'EUR'
+    };
+
+    let currentSupportCurrency = 'TWD';
+    let selectedSupportAmount = 0;
+    let authMode = 'login'; // 'login' | 'register'
+
+    // --- Global Speech Bubble Tooltip Controller (#1A1A1A) ---
+    const globalTooltip = document.getElementById('globalTooltip');
+
+    function showGlobalTooltip(target, text) {
+      if (!globalTooltip || !text) return;
+      globalTooltip.textContent = text;
+      globalTooltip.style.display = 'block';
+      
+      const rect = target.getBoundingClientRect();
+      const tooltipRect = globalTooltip.getBoundingClientRect();
+
+      let top = rect.top - tooltipRect.height - 8;
+      let arrowClass = 'arrow-down';
+
+      if (top < 10) {
+        top = rect.bottom + 8;
+        arrowClass = 'arrow-up';
+      }
+
+      let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+      if (left < 10) left = 10;
+      if (left + tooltipRect.width > window.innerWidth - 10) {
+        left = window.innerWidth - tooltipRect.width - 10;
+      }
+
+      globalTooltip.className = arrowClass;
+      globalTooltip.style.top = `${top}px`;
+      globalTooltip.style.left = `${left}px`;
+      globalTooltip.style.opacity = '1';
+      globalTooltip.style.transform = 'translateY(0)';
+    }
+
+    function hideGlobalTooltip() {
+      if (!globalTooltip) return;
+      globalTooltip.style.opacity = '0';
+      globalTooltip.style.transform = 'translateY(-4px)';
+    }
+
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target.closest('[data-tooltip]');
+      if (target) {
+        const text = target.getAttribute('data-tooltip');
+        if (text) showGlobalTooltip(target, text);
+      } else {
+        hideGlobalTooltip();
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      const target = e.target.closest('[data-tooltip]');
+      if (target) {
+        hideGlobalTooltip();
+      }
+    });
+
+    document.addEventListener('scroll', hideGlobalTooltip, true);
+
+    // --- Host Preset Data Architecture ---
+    const HOST_DATA = {
+      materials: [
+        { id: 'm_host_1', title: '陳月卿起床操', tags: ['晨起操'], urls: ['https://www.youtube.com/watch?v=89LSAiFcxUA', 'https://www.youtube.com/watch?v=xs4RRbTv03E', 'https://www.youtube.com/watch?v=VY45y26YU00', 'https://www.youtube.com/watch?v=DmaTWrHggjk'] },
+        { id: 'm_host_2', title: '唤醒身体和加速代謝', tags: ['晨起操'], urls: ['https://www.youtube.com/watch?v=zy77H-75ots'] },
+        { id: 'm_host_3', title: '早晨全身唤醒+拉筋运动', tags: ['伸展'], urls: ['https://www.youtube.com/watch?v=ZKt7ptUlhz8'] },
+        { id: 'm_host_4', title: '10分鐘站立式燃脂運動', tags: ['燃脂'], urls: ['https://www.youtube.com/watch?v=GWJGjJYculI'] },
+        { id: 'm_host_5', title: '古法经络操', tags: ['經絡'], urls: ['https://www.youtube.com/watch?v=cniKpr0jKgc'] },
+        { id: 'm_host_6', title: '古法能量操', tags: ['經絡'], urls: ['https://www.youtube.com/watch?v=UMyneK_ERd0'] },
+        { id: 'm_host_7', title: '拍打功', tags: ['經絡'], urls: ['https://www.youtube.com/watch?v=tjgH22RdH1Q'] },
+        { id: 'm_host_8', title: '甩手功+預防血管堵塞', tags: ['經絡'], urls: ['https://www.youtube.com/watch?v=ze0LuL5-sKw', 'https://www.youtube.com/watch?v=dnf6HaPxlbs'] },
+        { id: 'm_host_9', title: '古法健身1', tags: ['健身'], urls: ['https://www.youtube.com/watch?v=5HTrknosyxc'] },
+        { id: 'm_host_10', title: '古法健身2', tags: ['健身'], urls: ['https://www.youtube.com/watch?v=2lRjLchJW3c'] },
+        { id: 'm_host_11', title: '經典古法健身', tags: ['健身'], urls: ['https://www.youtube.com/watch?v=glJexaQx9C0'] },
+        { id: 'm_host_12', title: '認知及記憶力訓練', tags: ['保健'], urls: ['https://www.youtube.com/watch?v=vk3r60n9cdM', 'https://www.youtube.com/watch?v=IzwuxstXycY'] },
+        { id: 'm_host_13', title: '止鼾運動', tags: ['保健'], urls: ['https://www.youtube.com/watch?v=28ofSywISDs'] },
+        { id: 'm_host_14', title: '平衡訓練', tags: ['保健'], urls: ['https://www.youtube.com/watch?v=298paJb7iAQ'] },
+        { id: 'm_host_15', title: '足部運動', tags: ['保健'], urls: ['https://www.youtube.com/watch?v=cySVUzskkLY'] },
+        { id: 'm_host_16', title: '膝關節保養', tags: ['保健'], urls: ['https://www.youtube.com/watch?v=S2EAkhB4XEk'] },
+        { id: 'm_host_17', title: '吞嚥運動', tags: ['保健'], urls: ['https://www.youtube.com/watch?v=MBqbod5Bb8s'] },
+        { id: 'm_host_18', title: '聲帶運動', tags: ['保健'], urls: ['https://www.youtube.com/watch?v=lAkbUxtUAWE'] },
+        { id: 'm_host_19', title: '爆汗操', tags: ['燃脂'], urls: ['https://www.youtube.com/watch?v=YeUM9JaqsxM'] },
+        { id: 'm_host_20', title: '面部按摩', tags: ['保養'], urls: ['https://www.youtube.com/shorts/DSWdNEyrXk8'] },
+        { id: 'm_host_21', title: '夜间版古法健身操', tags: ['健身'], urls: ['https://www.youtube.com/watch?v=7umL0JNvMqA'] },
+        { id: 'm_host_22', title: '站立式全身燃脂運動', tags: ['燃脂'], urls: ['https://www.youtube.com/watch?v=hp89yY-e1eQ'] }
+      ]
+    };
+
+    function safeGetStorage(key, fallback) {
+      try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function safeSetStorage(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+
+    let userMaterials = safeGetStorage('user_materials', []);
+    let userSchedules = safeGetStorage('user_schedules', []);
+    let userCompletions = safeGetStorage('user_completions', {});
+    let currentUserAccount = safeGetStorage('juzhan_user_account', null);
+
+    // State Variables
+    let currentCalendarMode = 'personal'; // 'personal' | 'host'
+    let currentWeekStart = getMonday(new Date());
+    let activeTagFilterSet = new Set(['ALL']);
+    let searchQuery = '';
+    let fontLevel = 0;
+    const fontScales = { '-1': '0.9rem', '0': '1.0rem', '1': '1.1rem' };
+
+    function getMonday(d) {
+      const date = new Date(d);
+      const day = date.getDay();
+      const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+      date.setHours(0,0,0,0);
+      return new Date(date.setDate(diff));
+    }
+
+    function formatDateISO(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function getYouTubeIds(urls) {
+      if (!urls) return [];
+      const list = Array.isArray(urls) ? urls : [urls];
+      const ids = [];
+      list.forEach(item => {
+        if (!item) return;
+        const match = item.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+        if (match && match[1]) ids.push(match[1]);
+      });
+      return ids;
+    }
+
+    function getActiveMaterials() {
+      return currentCalendarMode === 'host' ? HOST_DATA.materials : userMaterials;
+    }
+
+    function isScheduleActiveOnDate(sched, targetDateStr) {
+      if (!sched.date) return false;
+      if (sched.excludedDates && sched.excludedDates.includes(targetDateStr)) {
+        return false;
+      }
+
+      if (!sched.repeat || sched.repeat === 'none') {
+        return sched.date === targetDateStr;
+      }
+
+      const baseD = new Date(sched.date + 'T00:00:00');
+      const targetD = new Date(targetDateStr + 'T00:00:00');
+
+      if (targetD < baseD) return false;
+
+      const diffTime = targetD.getTime() - baseD.getTime();
+      const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+      switch (sched.repeat) {
+        case 'daily':
+          return true;
+        case 'every2days':
+          return diffDays % 2 === 0;
+        case 'every3days':
+          return diffDays % 3 === 0;
+        case 'weekly':
+          return diffDays % 7 === 0;
+        case 'every2weeks':
+          return diffDays % 14 === 0;
+        case 'monthly': {
+          const targetDay = targetD.getDate();
+          const schedDay = sched.monthlyDay || baseD.getDate();
+          const maxDaysInTargetMonth = new Date(targetD.getFullYear(), targetD.getMonth() + 1, 0).getDate();
+          const expectedDay = Math.min(schedDay, maxDaysInTargetMonth);
+          return targetDay === expectedDay;
+        }
+        default:
+          return sched.date === targetDateStr;
+      }
+    }
+
+    function getActiveSchedulesForDate(targetDateStr) {
+      if (currentCalendarMode === 'host') {
+        const hostScheds = [];
+        const d = new Date(targetDateStr + 'T00:00:00');
+        const dayIdx = (d.getDay() + 6) % 7; // 0=Mon, 6=Sun
+        const iso = targetDateStr;
+
+        hostScheds.push({ id: `s_host_1_${iso}`, materialId: 'm_host_1', date: iso, startTime: '07:00', endTime: '07:30' });
+
+        const matMap2 = ['m_host_2', 'm_host_3', 'm_host_4', 'm_host_5', 'm_host_6', 'm_host_7', 'm_host_8'];
+        hostScheds.push({ id: `s_host_2_${iso}`, materialId: matMap2[dayIdx], date: iso, startTime: '07:30', endTime: '08:00' });
+
+        if (dayIdx === 5) hostScheds.push({ id: `s_host_3_${iso}`, materialId: 'm_host_9', date: iso, startTime: '08:15', endTime: '09:00' });
+        if (dayIdx === 6) hostScheds.push({ id: `s_host_3_${iso}`, materialId: 'm_host_10', date: iso, startTime: '08:15', endTime: '09:00' });
+
+        if (dayIdx >= 5) hostScheds.push({ id: `s_host_4_${iso}`, materialId: 'm_host_11', date: iso, startTime: '10:00', endTime: '10:40' });
+
+        const matMap5 = ['m_host_12', 'm_host_13', 'm_host_14', 'm_host_15', 'm_host_16'];
+        if (dayIdx <= 4) hostScheds.push({ id: `s_host_5_${iso}`, materialId: matMap5[dayIdx], date: iso, startTime: '13:00', endTime: '13:30' });
+
+        if (dayIdx === 5) hostScheds.push({ id: `s_host_6_${iso}`, materialId: 'm_host_17', date: iso, startTime: '15:00', endTime: '15:30' });
+        if (dayIdx === 6) hostScheds.push({ id: `s_host_6_${iso}`, materialId: 'm_host_18', date: iso, startTime: '15:00', endTime: '15:30' });
+
+        if (dayIdx >= 5) hostScheds.push({ id: `s_host_7_${iso}`, materialId: 'm_host_19', date: iso, startTime: '15:30', endTime: '16:00' });
+
+        hostScheds.push({ id: `s_host_8_${iso}`, materialId: 'm_host_20', date: iso, startTime: '21:00', endTime: '21:10' });
+
+        if (dayIdx <= 4) hostScheds.push({ id: `s_host_9_${iso}`, materialId: 'm_host_19', date: iso, startTime: '22:00', endTime: '22:30' });
+        else if (dayIdx === 5) hostScheds.push({ id: `s_host_9_${iso}`, materialId: 'm_host_21', date: iso, startTime: '22:00', endTime: '22:30' });
+        else hostScheds.push({ id: `s_host_9_${iso}`, materialId: 'm_host_22', date: iso, startTime: '22:00', endTime: '22:30' });
+
+        return hostScheds;
+      }
+
+      return userSchedules.filter(s => isScheduleActiveOnDate(s, targetDateStr));
+    }
+
+    function getDynamicTags() {
+      const materials = getActiveMaterials();
+      const tagSet = new Set();
+      materials.forEach(m => {
+        if (m.tags && Array.isArray(m.tags)) {
+          m.tags.forEach(t => { if (t && t.trim()) tagSet.add(t.trim()); });
+        } else if (m.tag && typeof m.tag === 'string') {
+          m.tag.split(/[,,\s]+/).forEach(t => { if (t && t.trim()) tagSet.add(t.trim()); });
+        }
+      });
+      return Array.from(tagSet);
+    }
+
+    function renderThumbnailHtml(mat) {
+      const ids = getYouTubeIds(mat.urls || mat.url);
+      const fallbackText = (mat.title || '課程').substring(0, 2);
+
+      if (ids.length > 0) {
+        const thumbUrl = `https://img.youtube.com/vi/${ids[0]}/hqdefault.jpg`;
+        return `<img src="${thumbUrl}" class="mat-thumb" alt="${mat.title}" onerror="this.onerror=null; this.outerHTML='<div class=\\'mat-thumb-fallback\\'><span class=\\'fallback-text\\'>${fallbackText}</span></div>';" />`;
+      }
+
+      let icon = '✨';
+      const tagStr = (mat.tags ? mat.tags.join(' ') : (mat.tag || '')).toLowerCase();
+      const titleStr = (mat.title || '').toLowerCase();
+      if (tagStr.includes('上班') || titleStr.includes('上班') || tagStr.includes('工作')) icon = '💼';
+      else if (tagStr.includes('伸展') || titleStr.includes('伸展') || tagStr.includes('拉筋')) icon = '🧘';
+      else if (tagStr.includes('燃脂') || tagStr.includes('有氧') || titleStr.includes('跑步')) icon = '🏃';
+      else if (tagStr.includes('閱讀') || tagStr.includes('學習')) icon = '📖';
+
+      return `
+        <div class="mat-thumb-fallback" title="${mat.title}">
+          <span class="fallback-icon">${icon}</span>
+          <span class="fallback-text">${fallbackText}</span>
+        </div>
+      `;
+    }
+
+    // --- Language Update Engine ---
+    function updateLanguage(lang) {
+      if (lang && i18nData[lang]) {
+        currentLang = lang;
+        safeSetStorage('user_language', currentLang);
+      }
+      const dict = i18nData[currentLang] || i18nData['zh-TW'];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (dict[key]) {
+          el.placeholder = dict[key];
+        }
+      });
+
+      const select = document.getElementById('langSelect');
+      if (select && select.value !== currentLang) {
+        select.value = currentLang;
+      }
+
+      if (LANG_TO_CURRENCY_MAP[currentLang]) {
+        currentSupportCurrency = LANG_TO_CURRENCY_MAP[currentLang];
+        updateSupportModalContent(currentSupportCurrency);
+      }
+
+      if (voiceIntroAudio && !voiceIntroAudio.paused) {
+        voiceIntroAudio.pause();
+        voiceIntroAudio.currentTime = 0;
+        currentAudioLang = null;
+      }
+
+      renderWeekBoard();
+    }
+
+    // --- Audio Broadcast Logic ---
+    let currentAudioLang = null;
+    const voiceIntroAudio = new Audio();
+
+    function toggleVoiceIntroAudio() {
+      const targetAudioSrc = (currentLang === 'zh-TW') ? '養成計畫-中文.M4A' : '養成計畫-英文.M4A';
+
+      if (!voiceIntroAudio.paused && currentAudioLang === currentLang) {
+        voiceIntroAudio.pause();
+        voiceIntroAudio.currentTime = 0;
+        currentAudioLang = null;
+      } else {
+        voiceIntroAudio.src = targetAudioSrc;
+        currentAudioLang = currentLang;
+        voiceIntroAudio.play().catch(err => {
+          console.log("Audio playback notice:", err);
+          alert(currentLang === 'zh-TW' ? '欸？為什麼我們做這個？為了幫大家建立專注健康的每日習慣！' : 'Wait, why did we build this? To help everyone build healthy daily habits!');
+        });
+      }
+    }
+
+    // --- Support Modal Logic ---
+    function populateSupportCurrencyDropdown() {
+      const select = document.getElementById('selectSupportCurrency');
+      if (!select) return;
+      select.innerHTML = `
+        <option value="TWD">NT$ 新台幣 (TWD)</option>
+        <option value="USD">US$ 美元 (USD)</option>
+        <option value="JPY">JP¥ 日本円 (JPY)</option>
+        <option value="KRW">KR₩ 한국 원 (KRW)</option>
+        <option value="EUR">€ 歐元 (EUR)</option>
+      `;
+      select.value = currentSupportCurrency;
+    }
+
+    function updateSupportModalContent(currencyCode) {
+      currentSupportCurrency = currencyCode || 'TWD';
+      const select = document.getElementById('selectSupportCurrency');
+      if (select && select.value !== currentSupportCurrency) {
+        select.value = currentSupportCurrency;
+      }
+
+      const config = SUPPORT_I18N_DATA[currentSupportCurrency] || SUPPORT_I18N_DATA['TWD'];
+
+      const lblTag = document.getElementById('lblCurrencyTag');
+      if (lblTag) lblTag.textContent = config.currencyTag;
+
+      const titleEl = document.getElementById('supportModalTitle');
+      if (titleEl) titleEl.textContent = config.title;
+
+      const introCard = document.getElementById('supportIntroCard');
+      if (introCard) {
+        introCard.innerHTML = `
+          <p>${config.intro[0]}</p>
+          <p>${config.intro[1]}</p>
+          <p class="highlight-text">${config.intro[2]}</p>
+        `;
+      }
+
+      const reassuranceEl = document.getElementById('supportReassuranceText');
+      if (reassuranceEl) reassuranceEl.textContent = config.reassurance;
+
+      const chk = document.getElementById('chkSupportShowNickname');
+      const labelAnon = document.getElementById('labelAnonStatus');
+      if (chk && labelAnon) {
+        labelAnon.textContent = chk.checked ? config.anonNickname : config.anonOnly;
+      }
+
+      renderSupportAmountCards();
+    }
+
+    function renderSupportAmountCards() {
+      const grid = document.getElementById('supportAmountGrid');
+      if (!grid) return;
+      const config = SUPPORT_I18N_DATA[currentSupportCurrency] || SUPPORT_I18N_DATA['TWD'];
+      grid.innerHTML = '';
+
+      config.amounts.forEach(item => {
+        const card = document.createElement('div');
+        card.className = `support-amount-card ${item.amount === selectedSupportAmount ? 'selected' : ''}`;
+        card.innerHTML = `
+          <span class="amount-val">${item.label}</span>
+          <span class="amount-note">${item.note}</span>
+        `;
+        card.addEventListener('click', () => {
+          selectedSupportAmount = item.amount;
+          document.querySelectorAll('.support-amount-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          updateSupportSubmitButtonText();
+        });
+        grid.appendChild(card);
+      });
+
+      updateSupportSubmitButtonText();
+    }
+
+    function updateSupportSubmitButtonText() {
+      const btn = document.getElementById('btnSubmitSupport');
+      if (!btn) return;
+      const config = SUPPORT_I18N_DATA[currentSupportCurrency] || SUPPORT_I18N_DATA['TWD'];
+      if (selectedSupportAmount === 0) {
+        btn.textContent = config.btnFree;
+      } else {
+        btn.textContent = config.btnPay(selectedSupportAmount);
+      }
+    }
+
+    function resetSupportModalViews() {
+      selectedSupportAmount = 0;
+      document.getElementById('supportFormView').style.display = 'block';
+      document.getElementById('supportLoadingView').style.display = 'none';
+      document.getElementById('supportThankView').style.display = 'none';
+      updateSupportModalContent(currentSupportCurrency);
+    }
+
+    // --- Core UI Render Engine ---
+    function renderWeekBoard() {
+      const board = document.getElementById('kanbanBoard');
+      board.innerHTML = '';
+
+      const dict = i18nData[currentLang] || i18nData['zh-TW'];
+      const weekDates = [];
+
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(currentWeekStart);
+        d.setDate(d.getDate() + i);
+        weekDates.push(d);
+      }
+
+      // Update Week Range Display
+      const isMobile = window.innerWidth <= 768;
+      const startStr = isMobile 
+        ? `${weekDates[0].getMonth()+1}/${weekDates[0].getDate()}`
+        : `${weekDates[0].getFullYear()}/${String(weekDates[0].getMonth()+1).padStart(2,'0')}/${String(weekDates[0].getDate()).padStart(2,'0')}`;
+      const endStr = isMobile
+        ? `${weekDates[6].getMonth()+1}/${weekDates[6].getDate()}`
+        : `${weekDates[6].getFullYear()}/${String(weekDates[6].getMonth()+1).padStart(2,'0')}/${String(weekDates[6].getDate()).padStart(2,'0')}`;
+      document.getElementById('weekRangeDisplay').textContent = `${startStr} - ${endStr}`;
+
+      const activeMaterials = getActiveMaterials();
+
+      let weeklyCompleted = 0;
+      let weeklyTotal = 0;
+
+      const todayIso = formatDateISO(new Date());
+      weekDates.forEach((d, idx) => {
+        const iso = formatDateISO(d);
+        const isToday = (iso === todayIso);
+        const dayOfWeekIdx = d.getDay(); // 0=Sun, 1=Mon...
+        const isWeekend = (dayOfWeekIdx === 0 || dayOfWeekIdx === 6);
+        const dayName = dict.days ? dict.days[dayOfWeekIdx] : ['週日','週一','週二','週三','週四','週五','週六'][dayOfWeekIdx];
+
+        const daySchedules = getActiveSchedulesForDate(iso);
+        daySchedules.sort((a, b) => {
+          if (a.startTime && b.startTime) return a.startTime.localeCompare(b.startTime);
+          if (a.startTime && !b.startTime) return -1;
+          if (!a.startTime && b.startTime) return 1;
+          return 0;
+        });
+
+        weeklyTotal += daySchedules.length;
+        daySchedules.forEach(s => {
+          if (isInstanceCompleted(s.id, iso)) weeklyCompleted++;
+        });
+
+        const col = document.createElement('div');
+        col.className = 'kanban-col' + (isToday ? ' today-highlight' : '');
+        col.dataset.date = iso;
+
+        const monthDayStr = `${d.getMonth() + 1}/${d.getDate()}`;
+        col.innerHTML = `
+          <div class="col-header">
+            <div class="col-header-left">
+              <span class="col-date-title ${isWeekend ? 'weekend' : ''}">${monthDayStr} ${dayName}</span>
+            </div>
+            <div class="col-count-badge">${daySchedules.length}</div>
+          </div>
+          <div class="col-body" id="colBody_${iso}"></div>
+          ${currentCalendarMode === 'personal' ? `
+            <div class="col-footer">
+              <button class="btn-quick-add" onclick="openScheduleModal('${iso}')" data-tooltip="新增當日排程">+ 排入影片</button>
+            </div>
+          ` : ''}
+        `;
+
+        const colBody = col.querySelector('.col-body');
+
+        if (currentCalendarMode === 'personal') {
+          col.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            col.classList.add('drag-over');
+          });
+
+          col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
+
+          col.addEventListener('drop', (e) => {
+            e.preventDefault();
+            col.classList.remove('drag-over');
+            const matId = e.dataTransfer.getData('text/plain');
+            if (matId) {
+              addScheduleForDateNoTime(matId, iso);
+            }
+          });
+        }
+
+        daySchedules.forEach(sched => {
+          const mat = activeMaterials.find(m => m.id === sched.materialId) || { title: '自訂課程', urls: [] };
+          const isCompleted = isInstanceCompleted(sched.id, iso);
+
+          const card = document.createElement('div');
+          card.className = `kanban-card ${isCompleted ? 'completed' : ''}`;
+          
+          if (currentCalendarMode === 'personal') {
+            card.draggable = true;
+            card.addEventListener('dragstart', (e) => {
+              e.dataTransfer.setData('text/plain', mat.id);
+            });
+          }
+
+          card.innerHTML = `
+            <div class="card-top">
+              <div style="display:flex; align-items:center; gap:4px;">
+                ${sched.startTime ? `<span class="card-time-tag">${sched.startTime}</span>` : ''}
+              </div>
+              ${currentCalendarMode === 'personal' ? `
+                <div class="card-actions">
+                  <button class="card-btn-icon" onclick="event.stopPropagation(); openEditSchedTimeModal('${sched.id}', '${iso}')" data-tooltip="編輯時間與週期">✏️</button>
+                  <button class="card-btn-icon" onclick="event.stopPropagation(); deleteSchedulePrompt('${sched.id}', '${iso}')" data-tooltip="刪除排程">✕</button>
+                </div>
+              ` : ''}
+            </div>
+            <div class="card-title" title="${mat.title}" onclick="playVideoModalForMaterial('${mat.id}')" ondblclick="playVideoModalForMaterial('${mat.id}')">${mat.title}</div>
+            <div class="card-bottom">
+              <button class="chk-complete-btn ${isCompleted ? 'active' : ''}" onclick="event.stopPropagation(); toggleInstanceCompleted('${sched.id}', '${iso}')" data-tooltip="標記完成狀態">
+                ${isCompleted ? '✓' : ''}
+              </button>
+            </div>
+          `;
+          colBody.appendChild(card);
+        });
+
+        board.appendChild(col);
+      });
+
+      document.getElementById('lblCompletedCount').textContent = weeklyCompleted;
+      document.getElementById('lblTotalCount').textContent = weeklyTotal;
+    }
+
+    function isInstanceCompleted(schedId, dateIso) {
+      return !!userCompletions[`${schedId}_${dateIso}`];
+    }
+
+    function toggleInstanceCompleted(schedId, dateIso) {
+      if (currentCalendarMode === 'host') return;
+      const key = `${schedId}_${dateIso}`;
+      userCompletions[key] = !userCompletions[key];
+      safeSetStorage('user_completions', userCompletions);
+      renderWeekBoard();
+    }
+
+    function renderMaterialDrawer() {
+      const container = document.getElementById('materialListContainer');
+      container.innerHTML = '';
+
+      const materials = getActiveMaterials();
+      const addBtn = document.getElementById('btnAddMaterial');
+      if (addBtn) addBtn.style.display = (currentCalendarMode === 'host') ? 'none' : 'inline-block';
+
+      renderDynamicTagDropdown();
+
+      let list = materials.filter(m => {
+        let matchesTag = activeTagFilterSet.has('ALL') || activeTagFilterSet.size === 0;
+        if (!matchesTag) {
+          const mTags = m.tags || (m.tag ? m.tag.split(/[,,\s]+/) : []);
+          matchesTag = mTags.some(t => activeTagFilterSet.has(t));
+        }
+        const matchesSearch = m.title.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesTag && matchesSearch;
+      });
+
+      const dict = i18nData[currentLang] || i18nData['zh-TW'];
+      document.getElementById('drawerTotalCount').textContent = `${dict.drawerTitle || '📗 教材庫'} (${materials.length})`;
+
+      if (materials.length === 0 && currentCalendarMode === 'personal') {
+        container.innerHTML = `
+          <div class="empty-drawer-notice">
+            <p>目前尚無個人教材喔！😊</p>
+            <p style="margin-top:0.4rem; font-size:0.75rem;">點擊上方「+ 新增教材」，或至「✨ 樓主養成計畫」點擊 ⭐ 收藏教材！</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach(mat => {
+        const thumbHtml = renderThumbnailHtml(mat);
+        const displayTagStr = (mat.tags && mat.tags.length > 0) ? mat.tags.join(', ') : (mat.tag || '通用');
+
+        const card = document.createElement('div');
+        card.className = 'material-card';
+        if (currentCalendarMode === 'personal') card.draggable = true;
+
+        card.innerHTML = `
+          ${thumbHtml}
+          <div class="mat-info">
+            <div class="mat-title">${mat.title}</div>
+            <div class="mat-meta">${displayTagStr}</div>
+          </div>
+          ${currentCalendarMode === 'host' ? `
+            <button class="btn-collect-star" onclick="event.stopPropagation(); collectHostMaterial('${mat.id}')" data-tooltip="收藏至個人教材庫">⭐ 收藏</button>
+          ` : `
+            <button class="card-btn-icon" onclick="event.stopPropagation(); deleteMaterial('${mat.id}')" data-tooltip="刪除教材">✕</button>
+          `}
+        `;
+
+        if (currentCalendarMode === 'personal') {
+          card.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', mat.id);
+          });
+        }
+
+        card.title = '💡 提示：雙擊卡片區域即可試看影片內容';
+        card.addEventListener('dblclick', (e) => {
+          playVideoModalForMaterial(mat.id);
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderDynamicTagDropdown() {
+      const menu = document.getElementById('tagDropdownMenu');
+      const label = document.getElementById('tagDropdownLabel');
+      if (!menu || !label) return;
+
+      const tags = getDynamicTags();
+
+      if (activeTagFilterSet.size === 0) {
+        activeTagFilterSet.add('ALL');
+      }
+
+      menu.innerHTML = '';
+
+      const allItem = document.createElement('label');
+      allItem.className = 'tag-dropdown-item';
+      const isAllChecked = activeTagFilterSet.has('ALL');
+      allItem.innerHTML = `
+        <input type="checkbox" id="chkTagAll" ${isAllChecked ? 'checked' : ''} />
+        <span>全部標籤</span>
+      `;
+
+      const chkAll = allItem.querySelector('input');
+      chkAll.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          activeTagFilterSet.clear();
+          activeTagFilterSet.add('ALL');
+        } else {
+          activeTagFilterSet.clear();
+        }
+        renderMaterialDrawer();
+      });
+      menu.appendChild(allItem);
+
+      tags.forEach(t => {
+        const item = document.createElement('label');
+        item.className = 'tag-dropdown-item';
+        const isChecked = activeTagFilterSet.has(t);
+        item.innerHTML = `
+          <input type="checkbox" data-tag="${t}" ${isChecked ? 'checked' : ''} />
+          <span>${t}</span>
+        `;
+
+        const chk = item.querySelector('input');
+        chk.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            activeTagFilterSet.delete('ALL');
+            activeTagFilterSet.add(t);
+          } else {
+            activeTagFilterSet.delete(t);
+            if (activeTagFilterSet.size === 0) {
+              activeTagFilterSet.add('ALL');
+            }
+          }
+          renderMaterialDrawer();
+        });
+        menu.appendChild(item);
+      });
+
+      if (activeTagFilterSet.has('ALL') || activeTagFilterSet.size === 0) {
+        label.textContent = '🏷️ 標籤篩選 (全部)';
+      } else {
+        const count = activeTagFilterSet.size;
+        label.textContent = `🏷️ 標籤篩選 (已選 ${count} 項)`;
+      }
+    }
+
+    // --- Member Center Neumorphic & Auth UI Controller ---
+    function renderMemberAuthUI() {
+      const btnLoginGroup = document.querySelector('.neu-btn-group');
+      const btnLogin = document.getElementById('btnShowLogin');
+      const btnReg = document.getElementById('btnShowRegister');
+      const formCard = document.getElementById('authFormContainer');
+      const loggedInCard = document.getElementById('loggedInStatus');
+      const backupRow = document.querySelector('.backup-btn-row');
+
+      if (currentUserAccount) {
+        // 已登入狀態：隱藏登入/註冊立體按鈕與展開表單，顯示登入者身分與備份按鈕
+        if (btnLoginGroup) btnLoginGroup.style.display = 'none';
+        formCard.style.display = 'none';
+        loggedInCard.style.display = 'block';
+        if (backupRow) backupRow.style.display = 'flex';
+        document.getElementById('lblLoggedInUser').textContent = `👤 會員代號：${currentUserAccount}`;
+        btnLogin.classList.remove('active');
+        btnReg.classList.remove('active');
+      } else {
+        // 未登入狀態（訪客）：顯示登入/註冊按鈕，隱藏登入資訊與備份按鈕
+        if (btnLoginGroup) btnLoginGroup.style.display = 'flex';
+        loggedInCard.style.display = 'none';
+        if (backupRow) backupRow.style.display = 'none';
+        
+        if (formCard.style.display === 'flex' || formCard.style.display === 'block') {
+          if (authMode === 'login') {
+            btnLogin.classList.add('active');
+            btnReg.classList.remove('active');
+          } else {
+            btnReg.classList.add('active');
+            btnLogin.classList.remove('active');
+          }
+        } else {
+          btnLogin.classList.remove('active');
+          btnReg.classList.remove('active');
+        }
+      }
+    }
+
+    // --- Recurrence Confirmation Dialog Manager ---
+    function openRecurrenceConfirmModal({ title, message, opt1Text, opt2Text, onOpt1, onOpt2 }) {
+      document.getElementById('recurrenceConfirmTitle').textContent = title;
+      document.getElementById('recurrenceConfirmMessage').textContent = message;
+      
+      const btn1 = document.getElementById('btnConfirmOpt1');
+      const btn2 = document.getElementById('btnConfirmOpt2');
+
+      btn1.textContent = opt1Text;
+      btn2.textContent = opt2Text;
+
+      const newBtn1 = btn1.cloneNode(true);
+      const newBtn2 = btn2.cloneNode(true);
+      btn1.parentNode.replaceChild(newBtn1, btn1);
+      btn2.parentNode.replaceChild(newBtn2, btn2);
+
+      newBtn1.addEventListener('click', () => {
+        closeModal('modalRecurrenceConfirm');
+        if (onOpt1) onOpt1();
+      });
+
+      newBtn2.addEventListener('click', () => {
+        closeModal('modalRecurrenceConfirm');
+        if (onOpt2) onOpt2();
+      });
+
+      openModal('modalRecurrenceConfirm');
+    }
+
+    function deleteSchedulePrompt(schedId, targetDateIso) {
+      if (currentCalendarMode === 'host') return;
+      const sched = userSchedules.find(s => s.id === schedId);
+      if (!sched) return;
+
+      const isRecurring = (sched.repeat && sched.repeat !== 'none');
+
+      if (isRecurring) {
+        openRecurrenceConfirmModal({
+          title: '刪除週期課程',
+          message: '這是一門週期性重複的課程，請問您希望如何處理刪除？',
+          opt1Text: '【僅刪除本日】',
+          opt2Text: '【刪除此週期（往後不再重複）】',
+          onOpt1: () => {
+            sched.excludedDates = sched.excludedDates || [];
+            if (!sched.excludedDates.includes(targetDateIso)) {
+              sched.excludedDates.push(targetDateIso);
+            }
+            safeSetStorage('user_schedules', userSchedules);
+            renderWeekBoard();
+          },
+          onOpt2: () => {
+            userSchedules = userSchedules.filter(s => s.id !== schedId);
+            safeSetStorage('user_schedules', userSchedules);
+            renderWeekBoard();
+          }
+        });
+      } else {
+        if (confirm('確定要刪除此排程嗎？')) {
+          userSchedules = userSchedules.filter(s => s.id !== schedId);
+          safeSetStorage('user_schedules', userSchedules);
+          renderWeekBoard();
+        }
+      }
+    }
+
+    function deleteMaterial(id) {
+      if (currentCalendarMode === 'host') return;
+      userMaterials = userMaterials.filter(m => m.id !== id);
+      safeSetStorage('user_materials', userMaterials);
+      renderMaterialDrawer();
+    }
+
+    function collectHostMaterial(hostMatId) {
+      const hostMat = HOST_DATA.materials.find(m => m.id === hostMatId);
+      if (!hostMat) return;
+
+      const hostUrls = hostMat.urls || (hostMat.url ? [hostMat.url] : []);
+      const isDuplicate = userMaterials.some(m => {
+        if (m.title.trim() === hostMat.title.trim()) return true;
+        const mUrls = m.urls || (m.url ? [m.url] : []);
+        return mUrls.some(u => hostUrls.includes(u));
+      });
+
+      if (isDuplicate) {
+        alert('此教材已在您的個人教材庫中囉！');
+        return;
+      }
+
+      const cloned = {
+        id: 'um_' + Date.now(),
+        title: hostMat.title,
+        tags: hostMat.tags ? [...hostMat.tags] : [hostMat.tag || '通用'],
+        urls: [...hostUrls]
+      };
+
+      userMaterials.push(cloned);
+      safeSetStorage('user_materials', userMaterials);
+      alert('已成功收藏至個人教材庫！');
+      renderMaterialDrawer();
+    }
+
+    function addScheduleForDateNoTime(matId, dateIso) {
+      if (currentCalendarMode === 'host') return;
+      userSchedules.push({
+        id: 's_' + Date.now(),
+        materialId: matId,
+        date: dateIso,
+        startTime: '',
+        endTime: '',
+        repeat: 'none'
+      });
+      safeSetStorage('user_schedules', userSchedules);
+      renderWeekBoard();
+    }
+
+    function openScheduleModal(dateIso) {
+      if (currentCalendarMode === 'host') return;
+      const select = document.getElementById('schedSelectMaterial');
+      select.innerHTML = '';
+      userMaterials.forEach(m => {
+        select.appendChild(new Option(m.title, m.id));
+      });
+      document.getElementById('schedInputDate').value = dateIso;
+      document.getElementById('schedRepeatType').value = 'none';
+      document.getElementById('groupMonthlyDay').style.display = 'none';
+      openModal('modalSchedule');
+    }
+
+    document.getElementById('schedRepeatType').addEventListener('change', (e) => {
+      document.getElementById('groupMonthlyDay').style.display = (e.target.value === 'monthly') ? 'flex' : 'none';
+    });
+
+    document.getElementById('editSchedRepeatType').addEventListener('change', (e) => {
+      document.getElementById('editGroupMonthlyDay').style.display = (e.target.value === 'monthly') ? 'flex' : 'none';
+    });
+
+    function openEditSchedTimeModal(schedId, targetDateIso) {
+      const sched = userSchedules.find(s => s.id === schedId);
+      if (!sched) return;
+
+      document.getElementById('editSchedId').value = schedId;
+      document.getElementById('editTargetDateIso').value = targetDateIso || sched.date;
+      document.getElementById('editSchedTime').value = sched.startTime || '';
+      document.getElementById('editSchedRepeatType').value = sched.repeat || 'none';
+      
+      const isMonthly = (sched.repeat === 'monthly');
+      document.getElementById('editGroupMonthlyDay').style.display = isMonthly ? 'flex' : 'none';
+      document.getElementById('editSchedMonthlyDay').value = sched.monthlyDay || (sched.date ? new Date(sched.date).getDate() : 15);
+
+      openModal('modalEditScheduleTime');
+    }
+
+    document.getElementById('btnSaveSchedTime').addEventListener('click', () => {
+      const schedId = document.getElementById('editSchedId').value;
+      const targetDateIso = document.getElementById('editTargetDateIso').value;
+      const timeVal = document.getElementById('editSchedTime').value;
+      const repeatVal = document.getElementById('editSchedRepeatType').value;
+      const monthlyDayVal = parseInt(document.getElementById('editSchedMonthlyDay').value) || 15;
+
+      const sched = userSchedules.find(s => s.id === schedId);
+      if (!sched) return;
+
+      const isOriginalRecurring = (sched.repeat && sched.repeat !== 'none');
+
+      if (isOriginalRecurring) {
+        closeModal('modalEditScheduleTime');
+        openRecurrenceConfirmModal({
+          title: '編輯週期課程',
+          message: '這是一門週期性重複的課程，請問您希望如何套用變更？',
+          opt1Text: '【僅修改本日】',
+          opt2Text: '【變更本日及往後所有週期】',
+          onOpt1: () => {
+            sched.excludedDates = sched.excludedDates || [];
+            if (!sched.excludedDates.includes(targetDateIso)) {
+              sched.excludedDates.push(targetDateIso);
+            }
+            userSchedules.push({
+              id: 's_' + Date.now(),
+              materialId: sched.materialId,
+              date: targetDateIso,
+              startTime: timeVal,
+              endTime: sched.endTime || '',
+              repeat: 'none'
+            });
+            safeSetStorage('user_schedules', userSchedules);
+            renderWeekBoard();
+          },
+          onOpt2: () => {
+            sched.startTime = timeVal;
+            sched.repeat = repeatVal;
+            if (repeatVal === 'monthly') {
+              sched.monthlyDay = monthlyDayVal;
+            }
+            safeSetStorage('user_schedules', userSchedules);
+            renderWeekBoard();
+          }
+        });
+      } else {
+        sched.startTime = timeVal;
+        sched.repeat = repeatVal;
+        if (repeatVal === 'monthly') {
+          sched.monthlyDay = monthlyDayVal;
+        }
+        safeSetStorage('user_schedules', userSchedules);
+        renderWeekBoard();
+        closeModal('modalEditScheduleTime');
+      }
+    });
+
+    document.getElementById('btnDeleteSchedInModal').addEventListener('click', () => {
+      const schedId = document.getElementById('editSchedId').value;
+      const targetDateIso = document.getElementById('editTargetDateIso').value;
+      closeModal('modalEditScheduleTime');
+      deleteSchedulePrompt(schedId, targetDateIso);
+    });
+
+    // Dynamic Multi-URL List Generator
+    let currentUrlList = [''];
+
+    function renderUrlInputFields() {
+      const container = document.getElementById('urlInputContainer');
+      container.innerHTML = '';
+
+      currentUrlList.forEach((url, idx) => {
+        const row = document.createElement('div');
+        row.className = 'url-input-row';
+        row.innerHTML = `
+          <input type="text" class="form-control url-input" value="${url}" placeholder="https://www.youtube.com/watch?v=..." style="flex:1;" />
+          ${idx === currentUrlList.length - 1 ? `<button type="button" class="btn-url-add" onclick="addUrlField()" data-tooltip="新增多集網址">➕</button>` : ''}
+          ${currentUrlList.length > 1 ? `<button type="button" class="btn-url-del" onclick="removeUrlField(${idx})" data-tooltip="刪除此網址">🗑️</button>` : ''}
+        `;
+
+        row.querySelector('.url-input').addEventListener('input', (e) => {
+          currentUrlList[idx] = e.target.value;
+        });
+
+        container.appendChild(row);
+      });
+    }
+
+    window.addUrlField = function() {
+      currentUrlList.push('');
+      renderUrlInputFields();
+    };
+
+    window.removeUrlField = function(idx) {
+      currentUrlList.splice(idx, 1);
+      renderUrlInputFields();
+    };
+
+    // Video Player Engine
+    function playVideoModalForMaterial(matId) {
+      const materials = getActiveMaterials();
+      const mat = materials.find(m => m.id === matId);
+      if (!mat) return;
+
+      const urls = mat.urls || [mat.url];
+      const ids = getYouTubeIds(urls);
+      const iframe = document.getElementById('videoIframe');
+      const playlist = document.getElementById('videoPlaylist');
+      const playlistBar = document.querySelector('#modalVideo .video-playlist-bar');
+      const extBtn = document.getElementById('btnOpenExternalVideo');
+      playlist.innerHTML = '';
+
+      const firstUrl = urls.length > 0 ? urls[0] : '#';
+      if (extBtn) extBtn.href = firstUrl;
+
+      if (ids.length > 0) {
+        iframe.src = `https://www.youtube.com/embed/${ids[0]}?autoplay=1&rel=0`;
+        if (ids.length > 1) {
+          if (playlistBar) playlistBar.style.setProperty('display', 'flex', 'important');
+          ids.forEach((id, i) => {
+            const btn = document.createElement('button');
+            btn.className = `playlist-item ${i === 0 ? 'active' : ''}`;
+            btn.textContent = `第 ${i + 1} 部`;
+            btn.onclick = () => {
+              document.querySelectorAll('.playlist-item').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+              if (urls[i] && extBtn) extBtn.href = urls[i];
+            };
+            playlist.appendChild(btn);
+          });
+        } else {
+          if (playlistBar) playlistBar.style.setProperty('display', 'none', 'important');
+        }
+      } else {
+        iframe.src = '';
+        if (playlistBar) playlistBar.style.setProperty('display', 'none', 'important');
+      }
+
+      document.getElementById('videoModalTitle').textContent = mat.title;
+      openModal('modalVideo');
+    }
+
+    // Modal Manager & Reliable Close Delegation
+    function openModal(id) {
+      hideGlobalTooltip();
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('active');
+        if (id === 'modalVideo') {
+          const iframe = document.getElementById('videoIframe');
+          if (iframe) iframe.src = '';
+        }
+      }
+    }
+
+    // Dropdown Tag Filter Toggle & Click Outside Handler
+    document.addEventListener('click', (e) => {
+      const dropWrap = document.getElementById('tagDropdownWrap');
+      const dropMenu = document.getElementById('tagDropdownMenu');
+      const dropBtn = document.getElementById('tagDropdownBtn');
+
+      if (dropBtn && dropBtn.contains(e.target)) {
+        dropMenu.classList.toggle('show');
+      } else if (dropWrap && !dropWrap.contains(e.target)) {
+        if (dropMenu) dropMenu.classList.remove('show');
+      }
+
+      const closeBtn = e.target.closest('[data-close]');
+      if (closeBtn) {
+        const modalId = closeBtn.getAttribute('data-close');
+        closeModal(modalId);
+      } else if (e.target.classList.contains('modal-overlay')) {
+        closeModal(e.target.id);
+      }
+    });
+
+    // View Navigation & Dual Track Mode Toggle
+    function showMainSchedulerView() {
+      document.getElementById('btnViewScheduler').classList.add('active');
+      document.getElementById('btnViewTheme').classList.remove('active');
+      document.getElementById('viewScheduler').classList.add('active');
+      document.getElementById('viewTheme').classList.remove('active');
+    }
+
+    document.getElementById('btnViewScheduler').addEventListener('click', showMainSchedulerView);
+    document.getElementById('btnViewTheme').addEventListener('click', () => {
+      document.getElementById('btnViewTheme').classList.add('active');
+      document.getElementById('btnViewScheduler').classList.remove('active');
+      document.getElementById('viewTheme').classList.add('active');
+      document.getElementById('viewScheduler').classList.remove('active');
+    });
+
+    document.getElementById('btnHostPlan').addEventListener('click', () => {
+      const btn = document.getElementById('btnHostPlan');
+      const dict = i18nData[currentLang] || i18nData['zh-TW'];
+      if (currentCalendarMode === 'personal') {
+        currentCalendarMode = 'host';
+        btn.textContent = dict.btnExitHost || '↩️ 回到我的行事曆';
+        btn.style.backgroundColor = '#4A3B32';
+        btn.style.color = '#FFFFFF';
+      } else {
+        currentCalendarMode = 'personal';
+        btn.textContent = dict.btnHostPlan || '✨ 看樓主的養成計畫';
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
+      }
+      renderMaterialDrawer();
+      renderWeekBoard();
+    });
+
+    // Font Scaling
+    function updateFontButtons() {
+      document.documentElement.style.setProperty('--font-scale', fontScales[fontLevel]);
+      document.getElementById('btnFontDec').disabled = (fontLevel <= -1);
+      document.getElementById('btnFontInc').disabled = (fontLevel >= 1);
+    }
+
+    document.getElementById('btnFontDec').addEventListener('click', () => {
+      if (fontLevel > -1) { fontLevel--; updateFontButtons(); }
+    });
+
+    document.getElementById('btnFontInc').addEventListener('click', () => {
+      if (fontLevel < 1) { fontLevel++; updateFontButtons(); }
+    });
+
+    // Collapsible Material Drawer Dual Entrance Sync
+    function toggleDrawer() {
+      const drawer = document.getElementById('drawerMaterials');
+      const toggleBtn = document.getElementById('btnToggleDrawer');
+      const floatTab = document.getElementById('drawerFloatingTab');
+      
+      drawer.classList.toggle('collapsed');
+      const isCollapsed = drawer.classList.contains('collapsed');
+
+      if (isCollapsed) {
+        toggleBtn.textContent = '◀ 展開教材庫';
+        floatTab.style.display = 'inline-flex';
+      } else {
+        toggleBtn.textContent = '收起教材庫 ▶';
+        floatTab.style.display = 'none';
+      }
+    }
+
+    document.getElementById('btnToggleDrawer').addEventListener('click', toggleDrawer);
+
+    // Language Selector Event Listener
+    document.getElementById('langSelect').addEventListener('change', (e) => {
+      updateLanguage(e.target.value);
+    });
+
+    // Voice Intro Audio Event Listener
+    document.getElementById('btnVoiceIntro').addEventListener('click', toggleVoiceIntroAudio);
+
+    // Support Modal Listeners & Submission Flow
+    function openSupportModal() {
+      hideGlobalTooltip();
+      resetSupportModalViews();
+      openModal('modalSupport');
+    }
+
+    const btnHdrSup = document.getElementById('btnSupportUsHdr');
+    if (btnHdrSup) {
+      btnHdrSup.addEventListener('click', openSupportModal);
+    }
+
+    document.getElementById('btnSupportUs').addEventListener('click', () => {
+      openSupportModal();
+    });
+
+    document.getElementById('selectSupportCurrency').addEventListener('change', (e) => {
+      updateSupportModalContent(e.target.value);
+    });
+
+    document.getElementById('chkSupportShowNickname').addEventListener('change', () => {
+      const config = SUPPORT_I18N_DATA[currentSupportCurrency] || SUPPORT_I18N_DATA['TWD'];
+      const labelAnon = document.getElementById('labelAnonStatus');
+      const chk = document.getElementById('chkSupportShowNickname');
+      if (labelAnon && chk) {
+        labelAnon.textContent = chk.checked ? config.anonNickname : config.anonOnly;
+      }
+    });
+
+    document.getElementById('btnSubmitSupport').addEventListener('click', () => {
+      const config = SUPPORT_I18N_DATA[currentSupportCurrency] || SUPPORT_I18N_DATA['TWD'];
+      const formView = document.getElementById('supportFormView');
+      const loadingView = document.getElementById('supportLoadingView');
+      const thankView = document.getElementById('supportThankView');
+      const thankTitle = document.getElementById('supportThankTitle');
+      const thankMsg = document.getElementById('supportThankMessage');
+
+      if (selectedSupportAmount === 0) {
+        formView.style.display = 'none';
+        thankView.style.display = 'block';
+        if (thankTitle) thankTitle.textContent = config.thankFreeTitle;
+        if (thankMsg) thankMsg.textContent = config.thankFreeMsg;
+      } else {
+        formView.style.display = 'none';
+        loadingView.style.display = 'block';
+
+        setTimeout(() => {
+          loadingView.style.display = 'none';
+          thankView.style.display = 'block';
+          if (thankTitle) thankTitle.textContent = config.thankPayTitle;
+          if (thankMsg) thankMsg.textContent = config.thankPayMsg;
+        }, 1000);
+      }
+    });
+
+    // Social Share Modal Listeners
+    document.getElementById('btnShare').addEventListener('click', () => {
+      openModal('modalShare');
+    });
+
+    document.getElementById('btnShareLine').addEventListener('click', () => {
+      const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}`;
+      window.open(url, '_blank', 'width=600,height=500');
+    });
+
+    document.getElementById('btnShareFb').addEventListener('click', () => {
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+      window.open(url, '_blank', 'width=600,height=500');
+    });
+
+    document.getElementById('btnShareThreads').addEventListener('click', () => {
+      const url = `https://www.threads.net/intent/post?text=${encodeURIComponent(window.location.href)}`;
+      window.open(url, '_blank', 'width=600,height=500');
+    });
+
+    document.getElementById('btnShareX').addEventListener('click', () => {
+      const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`;
+      window.open(url, '_blank', 'width=600,height=500');
+    });
+
+    document.getElementById('btnShareCopy').addEventListener('click', () => {
+      const dict = i18nData[currentLang] || i18nData['zh-TW'];
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const btnLabel = document.getElementById('lblCopyBtn');
+        const origText = btnLabel ? btnLabel.textContent : '複製連結';
+        if (btnLabel) btnLabel.textContent = dict.linkCopiedBtn || '已複製！✓';
+        setTimeout(() => {
+          if (btnLabel) btnLabel.textContent = origText;
+        }, 1500);
+      });
+    });
+
+    // Week Switcher Buttons
+    document.getElementById('btnPrevWeek').addEventListener('click', () => {
+      currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+      renderWeekBoard();
+    });
+
+    document.getElementById('btnNextWeek').addEventListener('click', () => {
+      currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+      renderWeekBoard();
+    });
+
+    // Search Input
+    document.getElementById('searchMaterialInput').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderMaterialDrawer();
+    });
+
+    // Open Add Material Modal
+    document.getElementById('btnAddMaterial').addEventListener('click', () => {
+      currentUrlList = [''];
+      renderUrlInputFields();
+      document.getElementById('matInputTitle').value = '';
+      document.getElementById('matInputTag').value = '';
+      openModal('modalMaterial');
+    });
+
+    // Save Material
+    document.getElementById('btnSaveMaterial').addEventListener('click', () => {
+      const title = document.getElementById('matInputTitle').value.trim();
+      const rawTagStr = document.getElementById('matInputTag').value.trim();
+      const urls = currentUrlList.map(u => u.trim()).filter(u => u.length > 0);
+
+      if (!title) {
+        alert('請填寫課程名稱！');
+        return;
+      }
+
+      const parsedTags = rawTagStr ? rawTagStr.split(/[,,\s]+/).map(t => t.trim()).filter(t => t.length > 0) : ['通用'];
+
+      userMaterials.push({
+        id: 'um_' + Date.now(),
+        title,
+        tags: parsedTags,
+        urls
+      });
+
+      safeSetStorage('user_materials', userMaterials);
+      renderMaterialDrawer();
+      closeModal('modalMaterial');
+    });
+
+    // Save Schedule (From Modal)
+    document.getElementById('btnSaveSchedule').addEventListener('click', () => {
+      const matId = document.getElementById('schedSelectMaterial').value;
+      const dateIso = document.getElementById('schedInputDate').value;
+      const startTime = document.getElementById('schedStartTime').value;
+      const endTime = document.getElementById('schedEndTime').value;
+      const repeatVal = document.getElementById('schedRepeatType').value;
+      const monthlyDayVal = parseInt(document.getElementById('schedMonthlyDay').value) || 15;
+
+      if (!dateIso) {
+        alert('請選擇日期！');
+        return;
+      }
+
+      userSchedules.push({
+        id: 's_' + Date.now(),
+        materialId: matId,
+        date: dateIso,
+        startTime,
+        endTime,
+        repeat: repeatVal,
+        monthlyDay: repeatVal === 'monthly' ? monthlyDayVal : undefined
+      });
+
+      safeSetStorage('user_schedules', userSchedules);
+      renderWeekBoard();
+      closeModal('modalSchedule');
+    });
+
+    // Member Center Neumorphic Auth & Accordion Controller
+    document.getElementById('btnMember').addEventListener('click', () => {
+      renderMemberAuthUI();
+      openModal('modalMember');
+    });
+
+    document.getElementById('btnShowLogin').addEventListener('click', () => {
+      const formCard = document.getElementById('authFormContainer');
+      const isCurrentlyOpen = (formCard.style.display === 'flex' || formCard.style.display === 'block') && authMode === 'login';
+      authMode = 'login';
+      formCard.style.display = isCurrentlyOpen ? 'none' : 'flex';
+      renderMemberAuthUI();
+    });
+
+    document.getElementById('btnShowRegister').addEventListener('click', () => {
+      const formCard = document.getElementById('authFormContainer');
+      const isCurrentlyOpen = (formCard.style.display === 'flex' || formCard.style.display === 'block') && authMode === 'register';
+      authMode = 'register';
+      formCard.style.display = isCurrentlyOpen ? 'none' : 'flex';
+      renderMemberAuthUI();
+    });
+
+    document.getElementById('btnAuthCancel').addEventListener('click', () => {
+      document.getElementById('authFormContainer').style.display = 'none';
+      document.getElementById('btnShowLogin').classList.remove('active');
+      document.getElementById('btnShowRegister').classList.remove('active');
+    });
+
+    document.getElementById('btnAuthSubmit').addEventListener('click', () => {
+      const acc = document.getElementById('userAuthAccount').value.trim();
+      const pwd = document.getElementById('userAuthPassword').value.trim();
+      if (!acc || !pwd) {
+        alert('請輸入使用者代號與密碼！');
+        return;
+      }
+
+      currentUserAccount = acc;
+      safeSetStorage('juzhan_user_account', currentUserAccount);
+      document.getElementById('userAuthAccount').value = '';
+      document.getElementById('userAuthPassword').value = '';
+      alert(authMode === 'login' ? `登入成功！歡迎回來，${acc}` : `註冊完成！歡迎使用代號：${acc}`);
+      renderMemberAuthUI();
+    });
+
+    document.getElementById('btnLogoutUser').addEventListener('click', () => {
+      currentUserAccount = null;
+      safeSetStorage('juzhan_user_account', null);
+      alert('已成功登出帳號！');
+      renderMemberAuthUI();
+    });
+
+    // Backup Export & Import Logic
+    document.getElementById('btnExportBackup').addEventListener('click', () => {
+      const backupData = {
+        userMaterials: userMaterials,
+        userSchedules: userSchedules,
+        userCompletions: userCompletions,
+        exportDate: new Date().toISOString()
+      };
+      const jsonStr = JSON.stringify(backupData, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `juzhan_backup_${formatDateISO(new Date())}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('btnImportBackup').addEventListener('click', () => {
+      document.getElementById('fileImportBackup').click();
+    });
+
+    document.getElementById('fileImportBackup').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data.userMaterials || data.userSchedules) {
+            if (data.userMaterials) userMaterials = data.userMaterials;
+            if (data.userSchedules) userSchedules = data.userSchedules;
+            if (data.userCompletions) userCompletions = data.userCompletions;
+            safeSetStorage('user_materials', userMaterials);
+            safeSetStorage('user_schedules', userSchedules);
+            safeSetStorage('user_completions', userCompletions);
+            renderMaterialDrawer();
+            renderWeekBoard();
+            alert('備份檔案匯入成功！已還原您的教材與排程。');
+          } else {
+            alert('無效的備份檔案格式！');
+          }
+        } catch (err) {
+          alert('檔案讀取失敗，請確認為正確的 JSON 備份檔。');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // Accordion Interactive Controller
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const isOpen = item.classList.contains('open');
+
+        // Optional: auto-collapse other accordion items for clean presentation
+        document.querySelectorAll('.accordion-item').forEach(i => {
+          if (i !== item) i.classList.remove('open');
+        });
+
+        if (isOpen) {
+          item.classList.remove('open');
+        } else {
+          item.classList.add('open');
+        }
+      });
+    });
+
+    // Init App Unconditionally
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = safeGetStorage('user_language', 'zh-TW');
+      populateSupportCurrencyDropdown();
+      updateLanguage(savedLang);
+      updateFontButtons();
+      renderWeekBoard();
+      renderMaterialDrawer();
+      renderMemberAuthUI();
+    });
+
+    // Auto-update RWD date strings & layout on window resize
+    window.addEventListener('resize', () => {
+      renderWeekBoard();
+    });
+  </script>
+</body>
+</html>
