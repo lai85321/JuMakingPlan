@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from "react";
 import { MaterialCard } from './MaterialCard';
 import styles from './MaterialDrawer.module.css';
 import { MaterialData } from '../MaterialModal/MaterialModal';
@@ -24,6 +25,43 @@ export function MaterialDrawer({
     onPlayMaterial,
     onCollectMaterial,
 }: MaterialDrawerProps) {
+    const [searchQuery, setSearchQuery] = useState("");
+    const tags = materials.flatMap((material) => material.tags);
+    const [isTagDropdownOpen, setIsTagDropdownOpen] =
+        useState(false);
+    const [activeTagFilterSet, setActiveTagFilterSet] =
+        useState<Set<string>>(() => new Set(["ALL"]));
+    const isAllChecked =
+        activeTagFilterSet.has("ALL") ||
+        activeTagFilterSet.size === 0;
+    const filteredMaterials = materials.filter((material) =>
+        material.title
+            .toLowerCase()
+            .includes(searchQuery.trim().toLowerCase())
+    );
+    function handleAllChange(checked: boolean) {
+        setActiveTagFilterSet(
+            checked ? new Set(["ALL"]) : new Set()
+        );
+    }
+    function handleTagChange(tag: string, checked: boolean) {
+        setActiveTagFilterSet((prev) => {
+            const next = new Set(prev);
+
+            if (checked) {
+                next.delete("ALL");
+                next.add(tag);
+            } else {
+                next.delete(tag);
+
+                if (next.size === 0) {
+                    next.add("ALL");
+                }
+            }
+
+            return next;
+        });
+    }
     return (
         <>
             {isCollapsed && (
@@ -59,16 +97,20 @@ export function MaterialDrawer({
                     <div className={styles.drawerSearchBox}>
                         <span className={styles.drawerSearchIcon}>🔍</span>
                         <input
+                            id="searchMaterialInput"
                             type="text"
                             className={styles.drawerSearchInput}
-                            data-i18n-ph="phSearchMaterial"
                             placeholder="搜尋影片名稱..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.currentTarget.value)}
                         />
                     </div>
                     {/* Dropdown Multi-Select Tag Filter Container  */}
                     <div className={styles.tagDropdownWrap}>
                         <div className="tooltip-wrapper">
-                            <button className={`${styles.tagDropdownBtn} `} type="button">
+                            <button type="button"
+                                className={`${styles.tagDropdownBtn} `}
+                                onClick={() => setIsTagDropdownOpen((prev) => !prev)}>
                                 <span>🏷️ 標籤篩選 (全部)</span>
                                 <span>▾</span>
                             </button>
@@ -76,11 +118,35 @@ export function MaterialDrawer({
                                 勾選標籤進行多選篩選
                             </div>
                         </div>
-                        <div className={styles.tagDropdownMenu}></div>
-                    </div>
+                        {isTagDropdownOpen && <div className={styles.tagDropdownMenu}>
+                            <label className={styles.tagDropdownItem}>
+                                <input
+                                    type="checkbox"
+                                    checked={isAllChecked}
+                                    onChange={(e) =>
+                                        handleAllChange(e.currentTarget.checked)
+                                    }
+                                />
+
+                                <span>全部標籤</span>
+                            </label>
+                            {tags.map((tag) => (
+                                <label className={styles.tagDropdownItem} key={tag}>
+                                    <input
+                                        type="checkbox"
+                                        checked={activeTagFilterSet.has(tag)}
+                                        onChange={(e) =>
+                                            handleTagChange(tag, e.currentTarget.checked)
+                                        }
+                                    />
+                                    <span>{tag}</span>
+                                </label>
+                            ))}
+                        </div>
+                        }</div>
                 </div>
                 <div className={styles.drawerList}>
-                    {materials.map((material) => (
+                    {filteredMaterials.map((material) => (
                         <MaterialCard
                             key={material.id}
                             material={material}
@@ -94,7 +160,7 @@ export function MaterialDrawer({
                 <div className={styles.drawerFooterHint} data-i18n="drawerFooterHint">
                     👆 拖曳卡片至日期即可排課
                 </div>
-            </div>
+            </div >
         </>
     );
 }

@@ -144,7 +144,7 @@
     z-index: 100;
     max-height: 200px;
     overflow-y: auto;
-    display: none;
+    /* display: none; */
     flex-direction: column;
 }
 
@@ -152,7 +152,7 @@
     display: flex;
 }
 
-.tag-dropdown-item {
+.tagDropdownItem {
     padding: 0.4rem 0.7rem;
     display: flex;
     align-items: center;
@@ -164,11 +164,11 @@
     user-select: none;
 }
 
-.tag-dropdown-item:hover {
+.tagDropdownItem:hover {
     background-color: var(--hover-bg);
 }
 
-.tag-dropdown-item input[type="checkbox"] {
+.tagDropdownItem input[type="checkbox"] {
     cursor: pointer;
     width: 14px;
     height: 14px;

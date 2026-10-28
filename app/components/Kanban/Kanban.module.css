@@ -220,3 +220,19 @@
     font-weight: 800;
     font-size: 0.7rem;
 }
+
+.kanbanCol.todayHighlight {
+    background-color: #FFFDF5 !important;
+    border: 2px solid #FFA726 !important;
+    box-shadow: 0 4px 14px rgba(255, 167, 38, 0.2) !important;
+}
+
+.kanbanCol.todayHighlight .colHeader {
+    background: linear-gradient(135deg, #FFF3E0, #FFE0B2) !important;
+    border-bottom: 1px solid #FFCC80 !important;
+}
+
+.kanbanCol.todayHighlight .colDateTitle {
+    color: #E65100 !important;
+    font-weight: 800 !important;
+}

@@ -19,9 +19,21 @@ export function Column({ children, id, date, mode = 'personal', onOpenAddClass }
         collisionPriority: CollisionPriority.Low,
         disabled: mode === 'host',
     });
+    const today = new Date();
+    const todayString = [
+        // today.getFullYear(),
+        String(today.getMonth() + 1).padStart(2, '0'),
+        String(today.getDate()).padStart(2, '0'),
+    ].join('/');
 
+    const isToday = date.slice(0, -2).trim() === todayString;
+    console.log(date, todayString, isToday);
     return (
-        <div className={styles.kanbanCol} ref={ref}>
+        <div
+            className={`${styles.kanbanCol} ${isToday ? styles.todayHighlight : ''
+                }`}
+            ref={ref}
+        >
             {/* 日期標題 */}
             <div className={styles.colHeader}>
                 <div className={styles.colHeaderLeft}>
