@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,8 +27,8 @@
       --accent-weekend-text: #D32F2F;
       --border-color: #D6CEBE;
       --hover-bg: #EFE4D6;
-      --shadow-sm: 0 2px 6px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-pill: 20px;
@@ -39,7 +40,8 @@
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       height: 100vh;
       max-height: 100vh;
       overflow: hidden;
@@ -55,7 +57,10 @@
       flex-direction: column;
     }
 
-    button, input, select, textarea {
+    button,
+    input,
+    select,
+    textarea {
       font-family: inherit;
       font-size: inherit;
       color: inherit;
@@ -200,7 +205,7 @@
     .capsule-btn.active {
       background-color: #fff;
       color: var(--primary-color);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
     .hdr-right {
@@ -299,7 +304,6 @@
       background-color: #fff;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-pill);
-      overflow: hidden;
       height: 30px;
       padding: 0 4px;
     }
@@ -312,6 +316,7 @@
       font-weight: bold;
       font-size: 0.88rem;
     }
+
     .week-nav-btn:hover {
       background-color: var(--hover-bg);
     }
@@ -328,7 +333,7 @@
       font-size: 0.82rem;
       font-weight: 700;
       color: var(--text-dark);
-      background-color: rgba(255,255,255,0.8);
+      background-color: rgba(255, 255, 255, 0.8);
       padding: 0.25rem 0.75rem;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-color);
@@ -350,7 +355,7 @@
       padding: 0 0.75rem;
       font-weight: 700;
       font-size: 0.82rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
       transition: all 0.2s;
     }
 
@@ -460,8 +465,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      background-color: rgba(255,255,255,0.45);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      background-color: rgba(255, 255, 255, 0.45);
       flex-shrink: 0;
       border-top-left-radius: var(--radius-md);
       border-top-right-radius: var(--radius-md);
@@ -513,7 +518,7 @@
     .btn-quick-add {
       width: 100%;
       border: 1.5px dashed var(--border-color);
-      background-color: rgba(255,255,255,0.6);
+      background-color: rgba(255, 255, 255, 0.6);
       color: var(--text-muted);
       font-size: 0.8rem;
       font-weight: 700;
@@ -533,7 +538,7 @@
       border-radius: var(--radius-md);
       padding: 0.55rem 0.65rem;
       box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(0,0,0,0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
@@ -587,6 +592,7 @@
       padding: 0 2px;
       cursor: pointer;
     }
+
     .card-btn-icon:hover {
       color: #E53935;
     }
@@ -601,6 +607,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     .card-title:hover {
       color: var(--primary-color);
       text-decoration: underline;
@@ -678,7 +685,7 @@
       padding: 0.65rem 0.8rem;
       font-size: 0.82rem;
       font-weight: 800;
-      box-shadow: -3px 4px 12px rgba(0,0,0,0.12);
+      box-shadow: -3px 4px 12px rgba(0, 0, 0, 0.12);
       z-index: 100;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -873,7 +880,7 @@
       justify-content: center;
       font-weight: 800;
       flex-shrink: 0;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
     }
 
     .mat-thumb-fallback .fallback-icon {
@@ -917,6 +924,7 @@
       border-radius: 10px;
       white-space: nowrap;
     }
+
     .btn-collect-star:hover {
       background-color: #FFF8E1;
       border-color: #FFC107;
@@ -1003,7 +1011,7 @@
       border-radius: var(--radius-md);
       width: 90%;
       max-width: 460px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       overflow: hidden;
       animation: modalFadeIn 0.2s ease-out;
       display: flex;
@@ -1013,8 +1021,15 @@
     }
 
     @keyframes modalFadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .modal-hdr {
@@ -1080,7 +1095,8 @@
       align-items: center;
     }
 
-    .btn-url-add, .btn-url-del {
+    .btn-url-add,
+    .btn-url-del {
       height: 34px;
       width: 34px;
       padding: 0;
@@ -1124,7 +1140,7 @@
       font-weight: 800;
       color: #4A3B32;
       cursor: pointer;
-      box-shadow: 3px 3px 6px rgba(0,0,0,0.1), -2px -2px 5px rgba(255,255,255,0.9);
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.9);
       transition: all 0.15s ease;
       display: inline-flex;
       align-items: center;
@@ -1136,11 +1152,12 @@
     .neu-btn:hover {
       background-color: #F4EFE6;
       transform: translateY(-1px);
-      box-shadow: 4px 4px 8px rgba(0,0,0,0.12), -3px -3px 6px rgba(255,255,255,0.95);
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12), -3px -3px 6px rgba(255, 255, 255, 0.95);
     }
 
-    .neu-btn:active, .neu-btn.active {
-      box-shadow: inset 2px 2px 4px rgba(0,0,0,0.15), inset -1px -1px 3px rgba(255,255,255,0.8);
+    .neu-btn:active,
+    .neu-btn.active {
+      box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.15), inset -1px -1px 3px rgba(255, 255, 255, 0.8);
       transform: translateY(1px);
       background-color: #ECE3D4;
       border-color: #C8B29C;
@@ -1252,7 +1269,7 @@
       font-size: 0.83rem;
       line-height: 1.55;
       color: #333333;
-      border-top: 1px solid rgba(0,0,0,0.05);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .acc-inner strong {
@@ -1417,8 +1434,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     /* Social Share Grid Buttons */
@@ -1469,11 +1491,25 @@
       fill: #FFF;
     }
 
-    .share-icon-line { background-color: #06C755; }
-    .share-icon-fb { background-color: #1877F2; }
-    .share-icon-threads { background-color: #000000; }
-    .share-icon-x { background-color: #000000; }
-    .share-icon-copy { background: linear-gradient(135deg, #FF6B6B, #FF8E53); }
+    .share-icon-line {
+      background-color: #06C755;
+    }
+
+    .share-icon-fb {
+      background-color: #1877F2;
+    }
+
+    .share-icon-threads {
+      background-color: #000000;
+    }
+
+    .share-icon-x {
+      background-color: #000000;
+    }
+
+    .share-icon-copy {
+      background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    }
 
     /* Video Player Modal Fixes */
     #modalVideo.modal-overlay {
@@ -1503,7 +1539,8 @@
     #modalVideo .video-player-container {
       position: relative;
       width: 100% !important;
-      max-height: 68vh !important; /* 防止影片本體過高擠壓底下來 */
+      max-height: 68vh !important;
+      /* 防止影片本體過高擠壓底下來 */
       aspect-ratio: 16 / 9;
       background-color: #000;
       border-radius: 8px;
@@ -1523,7 +1560,8 @@
       align-items: center !important;
       padding: 8px 0 4px 0 !important;
       border-top: 1px solid var(--border-color) !important;
-      overflow-x: auto !important; /* 確保超出時可左右滑動 */
+      overflow-x: auto !important;
+      /* 確保超出時可左右滑動 */
     }
 
     .video-playlist {
@@ -1533,11 +1571,13 @@
       overflow-x: auto !important;
       padding: 2px 0 !important;
       scrollbar-width: thin;
-      -webkit-overflow-scrolling: touch; /* 手機端平滑滑動 */
+      -webkit-overflow-scrolling: touch;
+      /* 手機端平滑滑動 */
     }
 
     .playlist-item {
-      flex-shrink: 0 !important; /* 嚴禁按鈕被壓縮變形 */
+      flex-shrink: 0 !important;
+      /* 嚴禁按鈕被壓縮變形 */
       padding: 6px 14px !important;
       background-color: var(--bg-main);
       font-size: 0.85rem !important;
@@ -1572,10 +1612,12 @@
       border: 2px solid #FFA726 !important;
       box-shadow: 0 4px 14px rgba(255, 167, 38, 0.2) !important;
     }
+
     .kanban-col.today-highlight .col-header {
       background: linear-gradient(135deg, #FFF3E0, #FFE0B2) !important;
       border-bottom: 1px solid #FFCC80 !important;
     }
+
     .kanban-col.today-highlight .col-date-title {
       color: #E65100 !important;
       font-weight: 800 !important;
@@ -1588,12 +1630,15 @@
 
     /* Responsive RWD Optimizations for Mobile Screens (<= 768px) */
     @media (max-width: 768px) {
-      html, body {
+
+      html,
+      body {
         height: auto !important;
         min-height: 100vh !important;
         max-height: none !important;
         overflow-x: hidden !important;
-        overflow-y: auto !important; /* 允許整頁自然垂直滾動 */
+        overflow-y: auto !important;
+        /* 允許整頁自然垂直滾動 */
       }
 
       /* 頂部 Header 雙行對齊結構 */
@@ -1604,20 +1649,25 @@
         flex-direction: column !important;
         gap: 6px !important;
       }
+
       .hdr-left {
         width: 100% !important;
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
       }
+
       .logo-text {
-        white-space: nowrap !important; /* 強制標題單行不折行 */
+        white-space: nowrap !important;
+        /* 強制標題單行不折行 */
         font-size: clamp(1rem, 4.2vw, 1.15rem) !important;
       }
+
       .view-capsule .capsule-btn {
         padding: 2px 8px !important;
         font-size: 0.78rem !important;
       }
+
       .hdr-right {
         width: 100% !important;
         display: flex !important;
@@ -1626,17 +1676,22 @@
         gap: 4px !important;
         flex-wrap: nowrap !important;
       }
-      .hdr-right button, .hdr-right select {
+
+      .hdr-right button,
+      .hdr-right select {
         height: 30px !important;
         padding: 0 5px !important;
         font-size: 0.76rem !important;
       }
-      .hdr-right .hdr-icon-btn, .hdr-right .share-btn {
+
+      .hdr-right .hdr-icon-btn,
+      .hdr-right .share-btn {
         width: 30px !important;
         height: 30px !important;
         padding: 4px !important;
         flex-shrink: 0;
       }
+
       .hdr-right .hdr-support-btn {
         display: inline-flex !important;
         align-items: center !important;
@@ -1665,16 +1720,19 @@
         justify-content: space-between !important;
         align-items: center !important;
       }
+
       .week-nav-group {
         display: flex !important;
         align-items: center !important;
         gap: 4px !important;
       }
+
       .week-range-text {
         font-size: 0.82rem !important;
         font-weight: 800 !important;
         letter-spacing: -0.2px;
       }
+
       .progress-stats-box {
         font-size: 0.78rem !important;
         margin: 0 !important;
@@ -1701,7 +1759,8 @@
       }
 
       .ctrl-right {
-        display: none !important; /* 手機端不需要 ctrl-right 區塊，#btnSupportUs 已在 header 呈現 */
+        display: none !important;
+        /* 手機端不需要 ctrl-right 區塊，#btnSupportUs 已在 header 呈現 */
       }
 
       /* 主畫面轉為垂直流式滾動 */
@@ -1747,6 +1806,7 @@
         width: 100% !important;
         gap: 12px !important;
       }
+
       .kanban-col {
         width: 100% !important;
         min-height: auto !important;
@@ -1761,23 +1821,29 @@
         padding: 8px 10px !important;
         gap: 8px !important;
       }
+
       .card-top {
         flex-shrink: 0;
       }
+
       .card-title {
         flex: 1;
-        white-space: normal !important; /* 不強制截斷，自然易讀 */
+        white-space: normal !important;
+        /* 不強制截斷，自然易讀 */
         padding: 0 8px;
         font-size: clamp(0.85rem, 3.8vw, 0.95rem) !important;
         line-height: 1.4 !important;
       }
+
       .card-bottom {
         margin-top: 0 !important;
         flex-shrink: 0;
       }
+
       .chk-complete-btn {
         width: 28px !important;
-        height: 28px !important; /* 手機端大按鈕更好點擊 */
+        height: 28px !important;
+        /* 手機端大按鈕更好點擊 */
       }
 
       /* 教材庫抽屜轉為底部滑動面板 */
@@ -1791,13 +1857,17 @@
         max-height: 70vh !important;
         z-index: 1050 !important;
         border-radius: 16px 16px 0 0 !important;
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.2) !important;
-        transform: translateY(100%) !important; /* 預設完全收合在底部 */
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2) !important;
+        transform: translateY(100%) !important;
+        /* 預設完全收合在底部 */
         transition: transform 0.3s ease;
       }
+
       .material-drawer.open {
-        transform: translateY(0) !important; /* 展開時向上向上滑出 */
+        transform: translateY(0) !important;
+        /* 展開時向上向上滑出 */
       }
+
       .material-drawer.collapsed {
         transform: translateY(100%) !important;
         display: flex !important;
@@ -1832,13 +1902,15 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Global Speech Bubble Tooltip Container -->
   <div id="globalTooltip"></div>
 
   <!-- Drawer Floating Right Edge Tab Handle -->
-  <button id="drawerFloatingTab" class="drawer-floating-tab" onclick="toggleDrawer()" data-tooltip="展開教材庫">◀ 📗 教材庫</button>
+  <button id="drawerFloatingTab" class="drawer-floating-tab" onclick="toggleDrawer()" data-tooltip="展開教材庫">◀ 📗
+    教材庫</button>
 
   <!-- Row 1 Header -->
   <header>
@@ -1848,7 +1920,8 @@
         <div class="logo-text" data-i18n="mainTitle">✨養成計畫</div>
       </div>
       <div class="view-capsule">
-        <button class="capsule-btn active" id="btnViewScheduler" data-i18n="navScheduler" data-tooltip="切換至週看板視圖">週看板</button>
+        <button class="capsule-btn active" id="btnViewScheduler" data-i18n="navScheduler"
+          data-tooltip="切換至週看板視圖">週看板</button>
         <button class="capsule-btn" id="btnViewTheme" data-i18n="navTheme" data-tooltip="切換至主題收藏庫">主題收藏庫</button>
       </div>
     </div>
@@ -1869,23 +1942,26 @@
 
       <button class="hdr-icon-btn" id="btnMember" aria-label="會員中心" data-tooltip="會員中心">
         <svg viewBox="0 0 24 24">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          <path
+            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
         </svg>
       </button>
 
       <button class="share-btn" id="btnShare" aria-label="分享" data-tooltip="分享">
         <svg viewBox="0 0 24 24">
-          <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z"/>
+          <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
         </svg>
       </button>
 
       <button class="hdr-icon-btn" id="btnVoiceIntro" aria-label="欸？為什麼我們做這個？" data-tooltip="欸？為什麼我們做這個？">
         <svg viewBox="0 0 24 24">
-          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          <path
+            d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
         </svg>
       </button>
 
-      <button class="btn-support-pill hdr-support-btn" id="btnSupportUsHdr" onclick="openSupportModal()" data-i18n="btnSupportUs" data-tooltip="喜歡這個工具嗎？歡迎給我們一點小鼓勵 😊">💛 支持</button>
+      <button class="btn-support-pill hdr-support-btn" id="btnSupportUsHdr" onclick="openSupportModal()"
+        data-i18n="btnSupportUs" data-tooltip="喜歡這個工具嗎？歡迎給我們一點小鼓勵 😊">💛 支持</button>
     </div>
   </header>
 
@@ -1899,15 +1975,18 @@
       </div>
 
       <div class="progress-stats-box">
-        <span data-i18n="completedProgressLabel">本週累計完成：</span><span class="progress-highlight" id="lblCompletedCount">0</span> / <span id="lblTotalCount">0</span> <span data-i18n="videoUnit">部影片</span>
+        <span data-i18n="completedProgressLabel">本週累計完成：</span><span class="progress-highlight"
+          id="lblCompletedCount">0</span> / <span id="lblTotalCount">0</span> <span data-i18n="videoUnit">部影片</span>
       </div>
 
-      <button class="btn-host-plan" id="btnHostPlan" data-i18n="btnHostPlan" data-tooltip="切換看樓主示範計畫/我的行事曆">✨ 看樓主的養成計畫</button>
+      <button class="btn-host-plan" id="btnHostPlan" data-i18n="btnHostPlan" data-tooltip="切換看樓主示範計畫/我的行事曆">✨
+        看樓主的養成計畫</button>
     </div>
 
     <div class="ctrl-right">
       <button class="btn-drawer-pill" id="btnToggleDrawer" data-tooltip="收合或展開右側教材庫">收起教材庫 ▶</button>
-      <button class="btn-support-pill" id="btnSupportUs" data-i18n="btnSupportUs" data-tooltip="喜歡這個工具嗎？歡迎給我們一點小鼓勵 😊">💛 小小支持</button>
+      <button class="btn-support-pill" id="btnSupportUs" data-i18n="btnSupportUs"
+        data-tooltip="喜歡這個工具嗎？歡迎給我們一點小鼓勵 😊">💛 小小支持</button>
     </div>
   </div>
 
@@ -1929,12 +2008,14 @@
             <div class="drawer-title-row">
               <span class="drawer-title" id="drawerTotalCount" data-i18n="drawerTitle">📗 教材庫 (0)</span>
               <div>
-                <button class="btn-add-mat" id="btnAddMaterial" data-i18n="btnAddMaterial" data-tooltip="新增個人教材/課程">+ 新增教材</button>
+                <button class="btn-add-mat" id="btnAddMaterial" data-i18n="btnAddMaterial" data-tooltip="新增個人教材/課程">+
+                  新增教材</button>
               </div>
             </div>
             <div class="drawer-search-box">
               <span class="drawer-search-icon">🔍</span>
-              <input type="text" class="drawer-search-input" id="searchMaterialInput" data-i18n-ph="phSearchMaterial" placeholder="搜尋影片名稱..." />
+              <input type="text" class="drawer-search-input" id="searchMaterialInput" data-i18n-ph="phSearchMaterial"
+                placeholder="搜尋影片名稱..." />
             </div>
             <!-- Dropdown Multi-Select Tag Filter Container -->
             <div class="tag-dropdown-wrap" id="tagDropdownWrap">
@@ -1960,7 +2041,8 @@
       <div class="theme-view-container">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <h2 style="font-weight:800; color:var(--primary-color)" data-i18n="themeTitle">💡 主題收藏庫與連結</h2>
-          <button class="btn-host-plan" id="btnAddThemeLink" data-i18n="btnAddTheme" data-tooltip="新增主題連結">+ 新增主題連結</button>
+          <button class="btn-host-plan" id="btnAddThemeLink" data-i18n="btnAddTheme" data-tooltip="新增主題連結">+
+            新增主題連結</button>
         </div>
         <div class="theme-grid" id="themeGridContainer"></div>
       </div>
@@ -1980,7 +2062,8 @@
           <div class="support-modal-header">
             <span class="support-modal-title" id="supportModalTitle">💛 給我們一點鼓勵</span>
             <div class="support-currency-wrap">
-              <label id="lblCurrencyTag" for="selectSupportCurrency" style="font-size:0.82rem; font-weight:700; color:var(--text-dark);">幣別：</label>
+              <label id="lblCurrencyTag" for="selectSupportCurrency"
+                style="font-size:0.82rem; font-weight:700; color:var(--text-dark);">幣別：</label>
               <select id="selectSupportCurrency" class="support-currency-select">
                 <option value="TWD">NT$ 新台幣</option>
                 <option value="USD">US$ 美元</option>
@@ -2024,11 +2107,14 @@
         <!-- Screen 3: Thank You View -->
         <div id="supportThankView" style="display:none; text-align:center; padding:1.5rem 0.5rem;">
           <div style="font-size:3rem; margin-bottom:0.6rem;">❤️</div>
-          <h3 id="supportThankTitle" style="font-weight:800; font-size:1.2rem; color:var(--primary-color); margin-bottom:0.8rem;">感謝你的支持！</h3>
-          <p id="supportThankMessage" style="font-size:0.9rem; color:var(--text-dark); line-height:1.6; margin-bottom:1.5rem;">
+          <h3 id="supportThankTitle"
+            style="font-weight:800; font-size:1.2rem; color:var(--primary-color); margin-bottom:0.8rem;">感謝你的支持！</h3>
+          <p id="supportThankMessage"
+            style="font-size:0.9rem; color:var(--text-dark); line-height:1.6; margin-bottom:1.5rem;">
             感謝你的使用！只要這個網站對你有用，對我們就是最好的肯定 😊
           </p>
-          <button id="btnCloseSupportThank" data-close="modalSupport" style="background-color:var(--primary-color); color:#FFF; font-weight:800; padding:0.6rem 1.5rem;">完成關閉</button>
+          <button id="btnCloseSupportThank" data-close="modalSupport"
+            style="background-color:var(--primary-color); color:#FFF; font-weight:800; padding:0.6rem 1.5rem;">完成關閉</button>
         </div>
       </div>
     </div>
@@ -2045,31 +2131,46 @@
         <div class="social-share-grid">
           <button class="btn-share-social" id="btnShareLine">
             <div class="share-icon-circle share-icon-line">
-              <svg viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.412-.105-.53-.285l-2.28-3.239v2.868c0 .344-.28.629-.629.629-.347 0-.627-.285-.627-.629V8.108c0-.27.174-.51.432-.596.064-.021.133-.031.199-.031.211 0 .412.105.53.285l2.28 3.239V8.108c0-.345.28-.63.629-.63.348 0 .629.285.629.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.62C24 4.757 18.627 0 12 0S0 4.757 0 10.62c0 5.26 4.28 9.68 10.063 10.428.391.084.924.258 1.059.592.12.302.079.776.039 1.082l-.171 1.027c-.053.303-.243 1.192 1.042.65 1.286-.542 6.942-4.089 9.475-6.992C23.048 15.346 24 13.09 24 10.62"/></svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.412-.105-.53-.285l-2.28-3.239v2.868c0 .344-.28.629-.629.629-.347 0-.627-.285-.627-.629V8.108c0-.27.174-.51.432-.596.064-.021.133-.031.199-.031.211 0 .412.105.53.285l2.28 3.239V8.108c0-.345.28-.63.629-.63.348 0 .629.285.629.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.62C24 4.757 18.627 0 12 0S0 4.757 0 10.62c0 5.26 4.28 9.68 10.063 10.428.391.084.924.258 1.059.592.12.302.079.776.039 1.082l-.171 1.027c-.053.303-.243 1.192 1.042.65 1.286-.542 6.942-4.089 9.475-6.992C23.048 15.346 24 13.09 24 10.62" />
+              </svg>
             </div>
             <span>LINE</span>
           </button>
           <button class="btn-share-social" id="btnShareFb">
             <div class="share-icon-circle share-icon-fb">
-              <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
             </div>
             <span>Facebook</span>
           </button>
           <button class="btn-share-social" id="btnShareThreads">
             <div class="share-icon-circle share-icon-threads">
-              <svg viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.582-.022-6.726-1.503-8.857-4.173-1.97-2.467-2.883-5.748-2.57-9.24.593-6.61 5.867-11.43 12.48-11.43 6.84 0 12.09 4.966 12.09 11.455 0 6.376-4.992 11.516-11.385 11.758v-2.036c4.954-.236 8.802-4.321 8.802-9.722 0-5.184-4.103-9.352-9.507-9.352-5.342 0-9.588 3.92-10.05 9.278-.242 2.753.472 5.34 2.012 7.28 1.666 2.09 4.148 3.25 6.985 3.267.006 0 .012 0 .018 0 3.32 0 6.082-1.97 6.945-4.952.12-.416.557-.655.973-.535.416.12.655.556.535.973-1.096 3.79-4.582 6.292-8.796 6.292zM12 16.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12.186 24h-.007c-3.582-.022-6.726-1.503-8.857-4.173-1.97-2.467-2.883-5.748-2.57-9.24.593-6.61 5.867-11.43 12.48-11.43 6.84 0 12.09 4.966 12.09 11.455 0 6.376-4.992 11.516-11.385 11.758v-2.036c4.954-.236 8.802-4.321 8.802-9.722 0-5.184-4.103-9.352-9.507-9.352-5.342 0-9.588 3.92-10.05 9.278-.242 2.753.472 5.34 2.012 7.28 1.666 2.09 4.148 3.25 6.985 3.267.006 0 .012 0 .018 0 3.32 0 6.082-1.97 6.945-4.952.12-.416.557-.655.973-.535.416.12.655.556.535.973-1.096 3.79-4.582 6.292-8.796 6.292zM12 16.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z" />
+              </svg>
             </div>
             <span>Threads</span>
           </button>
           <button class="btn-share-social" id="btnShareX">
             <div class="share-icon-circle share-icon-x">
-              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
             </div>
             <span>X (Twitter)</span>
           </button>
           <button class="btn-share-social" id="btnShareCopy">
             <div class="share-icon-circle share-icon-copy" id="copyIconCircle">
-              <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+              </svg>
             </div>
             <span id="lblCopyBtn" data-i18n="btnCopyLink">複製連結</span>
           </button>
@@ -2101,7 +2202,8 @@
       </div>
       <div class="modal-ftr">
         <button data-close="modalMaterial" data-i18n="btnCancel">取消</button>
-        <button id="btnSaveMaterial" data-i18n="btnSave" style="background-color:var(--primary-color); color:#fff;">保存</button>
+        <button id="btnSaveMaterial" data-i18n="btnSave"
+          style="background-color:var(--primary-color); color:#fff;">保存</button>
       </div>
     </div>
   </div>
@@ -2151,7 +2253,8 @@
       </div>
       <div class="modal-ftr">
         <button data-close="modalSchedule" data-i18n="btnCancel">取消</button>
-        <button id="btnSaveSchedule" data-i18n="btnSave" style="background-color:var(--primary-color); color:#fff;">確認排入</button>
+        <button id="btnSaveSchedule" data-i18n="btnSave"
+          style="background-color:var(--primary-color); color:#fff;">確認排入</button>
       </div>
     </div>
   </div>
@@ -2203,13 +2306,17 @@
         <button class="modal-close-btn" data-close="modalRecurrenceConfirm" data-tooltip="關閉視窗">✕</button>
       </div>
       <div class="modal-body" style="text-align:center; padding:1.2rem 1rem;">
-        <p id="recurrenceConfirmMessage" style="font-size:0.92rem; font-weight:700; color:var(--text-dark); line-height:1.5; margin-bottom:1.2rem;">
+        <p id="recurrenceConfirmMessage"
+          style="font-size:0.92rem; font-weight:700; color:var(--text-dark); line-height:1.5; margin-bottom:1.2rem;">
           這是一門週期性重複的課程，請問您希望如何套用變更？
         </p>
         <div style="display:flex; flex-direction:column; gap:0.65rem;">
-          <button id="btnConfirmOpt1" style="background-color:#FFF8E1; color:#B78103; border:1px solid #FFE082; font-weight:800; padding:0.65rem; border-radius:8px;">【僅修改本日】</button>
-          <button id="btnConfirmOpt2" style="background-color:var(--primary-color); color:#FFF; border:none; font-weight:800; padding:0.65rem; border-radius:8px;">【變更本日及往後所有週期】</button>
-          <button id="btnConfirmCancel" data-close="modalRecurrenceConfirm" style="padding:0.5rem; color:var(--text-muted); background:transparent; border:none;">【取消】</button>
+          <button id="btnConfirmOpt1"
+            style="background-color:#FFF8E1; color:#B78103; border:1px solid #FFE082; font-weight:800; padding:0.65rem; border-radius:8px;">【僅修改本日】</button>
+          <button id="btnConfirmOpt2"
+            style="background-color:var(--primary-color); color:#FFF; border:none; font-weight:800; padding:0.65rem; border-radius:8px;">【變更本日及往後所有週期】</button>
+          <button id="btnConfirmCancel" data-close="modalRecurrenceConfirm"
+            style="padding:0.5rem; color:var(--text-muted); background:transparent; border:none;">【取消】</button>
         </div>
       </div>
     </div>
@@ -2224,7 +2331,9 @@
       </div>
       <div class="modal-body">
         <div class="video-player-container">
-          <iframe id="videoIframe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe id="videoIframe"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="video-playlist-bar">
           <div class="video-playlist" id="videoPlaylist"></div>
@@ -2242,7 +2351,7 @@
         <button class="modal-close-btn" data-close="modalMember" data-tooltip="關閉視窗">✕</button>
       </div>
       <div class="modal-body" style="padding:1rem;">
-        
+
         <!-- Top Neumorphic / 3D Raised Buttons Bar -->
         <div class="neu-btn-group">
           <button class="neu-btn" id="btnShowLogin" data-i18n="neuBtnLogin" data-tooltip="切換登入表單">👤 登入帳號</button>
@@ -2250,31 +2359,41 @@
         </div>
 
         <!-- Auth Form Panel (Expandable / Collapsible) -->
-        <div class="member-auth-card" id="authFormContainer" style="display:none; flex-direction:column; gap:14px; padding:16px;">
+        <div class="member-auth-card" id="authFormContainer"
+          style="display:none; flex-direction:column; gap:14px; padding:16px;">
           <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
             <label style="font-weight:700; font-size:0.88rem; color:#4A3B32;" data-i18n="lblAuthAccount">使用者代號 *</label>
-            <input type="text" class="form-control" id="userAuthAccount" data-i18n-ph="phAuthAccount" placeholder="請輸入代號..." style="padding:10px 12px; border:1.5px solid #D8C3AC; border-radius:8px; font-size:0.9rem;" />
+            <input type="text" class="form-control" id="userAuthAccount" data-i18n-ph="phAuthAccount"
+              placeholder="請輸入代號..."
+              style="padding:10px 12px; border:1.5px solid #D8C3AC; border-radius:8px; font-size:0.9rem;" />
           </div>
           <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
             <label style="font-weight:700; font-size:0.88rem; color:#4A3B32;" data-i18n="lblAuthPassword">自訂密碼 *</label>
-            <input type="password" class="form-control" id="userAuthPassword" data-i18n-ph="phAuthPassword" placeholder="請輸入密碼..." style="padding:10px 12px; border:1.5px solid #D8C3AC; border-radius:8px; font-size:0.9rem;" />
+            <input type="password" class="form-control" id="userAuthPassword" data-i18n-ph="phAuthPassword"
+              placeholder="請輸入密碼..."
+              style="padding:10px 12px; border:1.5px solid #D8C3AC; border-radius:8px; font-size:0.9rem;" />
           </div>
           <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:4px;">
-            <button type="button" class="btn-cancel" id="btnAuthCancel" data-i18n="btnAuthCancel" style="padding:0.4rem 0.8rem; font-size:0.82rem;">收起</button>
-            <button type="button" class="btn-primary" id="btnAuthSubmit" data-i18n="btnAuthSubmit" style="background-color:var(--primary-color); color:#fff; font-weight:800; font-size:0.82rem; padding:0.4rem 1rem;">確認提交</button>
+            <button type="button" class="btn-cancel" id="btnAuthCancel" data-i18n="btnAuthCancel"
+              style="padding:0.4rem 0.8rem; font-size:0.82rem;">收起</button>
+            <button type="button" class="btn-primary" id="btnAuthSubmit" data-i18n="btnAuthSubmit"
+              style="background-color:var(--primary-color); color:#fff; font-weight:800; font-size:0.82rem; padding:0.4rem 1rem;">確認提交</button>
           </div>
         </div>
 
         <!-- Logged In Status Banner -->
-        <div class="member-auth-card" id="loggedInStatus" style="display:none; text-align:center; background-color:#E8F5E9; border-color:#C8E6C9;">
+        <div class="member-auth-card" id="loggedInStatus"
+          style="display:none; text-align:center; background-color:#E8F5E9; border-color:#C8E6C9;">
           <div style="font-weight:800; color:#2E7D32; font-size:0.88rem;" id="lblLoggedInUser">歡迎回來，養成計畫學員！</div>
           <div style="font-size:0.75rem; color:#4B8B3B; margin-top:2px;">已成功啟用本機與跨裝置同步</div>
-          <button id="btnLogoutUser" data-i18n="btnLogout" style="margin:0.4rem auto 0 auto; background-color:#FFF; border:1px solid #A5D6A7; color:#2E7D32; font-weight:700; font-size:0.75rem; padding:0.25rem 0.75rem;">登出帳號</button>
+          <button id="btnLogoutUser" data-i18n="btnLogout"
+            style="margin:0.4rem auto 0 auto; background-color:#FFF; border:1px solid #A5D6A7; color:#2E7D32; font-weight:700; font-size:0.75rem; padding:0.25rem 0.75rem;">登出帳號</button>
         </div>
 
         <!-- Backup Action Buttons Row -->
         <div class="backup-btn-row">
-          <button class="btn-backup-action" id="btnExportBackup" data-i18n="btnExportBackup" data-tooltip="將目前的課程與排程備份下載至電腦">
+          <button class="btn-backup-action" id="btnExportBackup" data-i18n="btnExportBackup"
+            data-tooltip="將目前的課程與排程備份下載至電腦">
             📦 下載排程備份檔 (JSON)
           </button>
           <button class="btn-backup-action" id="btnImportBackup" data-i18n="btnImportBackup" data-tooltip="由備份檔還原課程與排程">
@@ -2285,7 +2404,7 @@
 
         <!-- 9 Accordion Items -->
         <div class="member-accordion">
-          
+
           <!-- Item 1 -->
           <div class="accordion-item">
             <button class="accordion-header">
@@ -2396,7 +2515,8 @@
                 <p><strong>不收月費、不收年費、不強迫綁約。</strong></p>
                 <p>主機運作仍需成本，若覺得有幫助，歡迎透過「💛 小小支持」給點零錢鼓勵（最高不超過 NT$100）。</p>
                 <p>我也快面對退休年紀了 😂，有一點零錢收入能讓我更有動力維護；若沒有，為了生存大概得去麥當勞翻薯條，更新就只能看緣分了！</p>
-                <p style="color:#C62828;">⚠️ 小本經營人力有限，支持款純屬自願心意，<strong>贊助後恕無法提供退費</strong>，請確認負擔得起且發自內心想支持再進行，萬分感謝體諒！</p>
+                <p style="color:#C62828;">⚠️ 小本經營人力有限，支持款純屬自願心意，<strong>贊助後恕無法提供退費</strong>，請確認負擔得起且發自內心想支持再進行，萬分感謝體諒！
+                </p>
               </div>
             </div>
           </div>
@@ -2421,46 +2541,49 @@
               <span class="acc-arrow">▾</span>
             </button>
             <div class="accordion-content">
-              <div class="acc-inner" style="font-size:0.8rem; line-height:1.6; color:#444; max-height:380px; overflow-y:auto; padding-right:6px;">
+              <div class="acc-inner"
+                style="font-size:0.8rem; line-height:1.6; color:#444; max-height:380px; overflow-y:auto; padding-right:6px;">
                 <p style="font-size:0.75rem; color:#888; margin-bottom:0.6rem;">最後更新日期：2026 年 10 月 2 日</p>
-                
+
                 <p>「聚✨養成計畫」（以下簡稱「本平台」）重視您的隱私。我們希望您來這裡，是為了安排自己的生活、養成想要的習慣，而不是為了留下大量個人資料。</p>
-                
-                <blockquote style="margin:0.5rem 0; padding:0.4rem 0.8rem; background:#F0EBE1; border-left:3px solid var(--accent-color); font-weight:700; color:var(--primary-color);">
+
+                <blockquote
+                  style="margin:0.5rem 0; padding:0.4rem 0.8rem; background:#F0EBE1; border-left:3px solid var(--accent-color); font-weight:700; color:var(--primary-color);">
                   能不收，就不收；需要的才收。
                 </blockquote>
 
                 <p style="margin-top:0.6rem;"><strong>一、我們會蒐集哪些資料？</strong><br>
-                註冊時僅需設定「使用者代號」與「密碼」。使用時系統保存您主動建立的資料（收藏影片連結、自訂標籤、生活排程、打勾狀態），純粹用以登入、跨裝置同步與日常計畫使用。</p>
+                  註冊時僅需設定「使用者代號」與「密碼」。使用時系統保存您主動建立的資料（收藏影片連結、自訂標籤、生活排程、打勾狀態），純粹用以登入、跨裝置同步與日常計畫使用。</p>
 
                 <p style="margin-top:0.6rem;"><strong>二、我們不要求您提供什麼？</strong><br>
-                不要求真實姓名、Email、手機號碼、通訊地址或身分證字號。因此若忘記帳號或密碼，無法透過 Email 或手機協助重設，請務必記好帳密。</p>
+                  不要求真實姓名、Email、手機號碼、通訊地址或身分證字號。因此若忘記帳號或密碼，無法透過 Email 或手機協助重設，請務必記好帳密。</p>
 
                 <p style="margin-top:0.6rem;"><strong>三、密碼與帳號安全</strong><br>
-                密碼絕不以明文保存，均經適當安全雜湊處理，管理人員無法直接查閱原始密碼。請妥善保管帳密，避免與他人共用。</p>
+                  密碼絕不以明文保存，均經適當安全雜湊處理，管理人員無法直接查閱原始密碼。請妥善保管帳密，避免與他人共用。</p>
 
                 <p style="margin-top:0.6rem;"><strong>四、我們會追蹤您嗎？</strong><br>
-                僅使用必要之 Cookie、LocalStorage 維持登入連線與網站設定。<strong>絕不進行第三方商業廣告追蹤</strong>，亦不建立跨網站行為檔案。</p>
+                  僅使用必要之 Cookie、LocalStorage 維持登入連線與網站設定。<strong>絕不進行第三方商業廣告追蹤</strong>，亦不建立跨網站行為檔案。</p>
 
                 <p style="margin-top:0.6rem;"><strong>五、您的資料會拿去做什麼？</strong><br>
-                資料僅供系統運作與備份使用。目前尚未實作個人使用行為分析；未來若有餘力，僅可能以「去識別化、彙總統計」了解影音熱門趨勢以改善內容，絕不用於建立個人健康檔案，亦不辨識特定個人。</p>
+                  資料僅供系統運作與備份使用。目前尚未實作個人使用行為分析；未來若有餘力，僅可能以「去識別化、彙總統計」了解影音熱門趨勢以改善內容，絕不用於建立個人健康檔案，亦不辨識特定個人。</p>
 
                 <p style="margin-top:0.6rem;"><strong>六、第三方服務</strong><br>
-                使用必要的雲端託管、影音或付款服務。當透過 YouTube 播放影音時，由 YouTube 依其隱私政策處理，本平台不索取您在該平台的完整觀看隱私紀錄。</p>
+                  使用必要的雲端託管、影音或付款服務。當透過 YouTube 播放影音時，由 YouTube 依其隱私政策處理，本平台不索取您在該平台的完整觀看隱私紀錄。</p>
 
                 <p style="margin-top:0.6rem;"><strong>七、資料保存與帳號刪除（6 個月未登入清理）</strong><br>
-                若會員帳號<strong>連續超過 6 個月沒有任何使用紀錄</strong>，系統可能會將該帳號及其相關資料清除。請務必定期使用「下載排程備份檔 (JSON)」留存於本機裝置。</p>
+                  若會員帳號<strong>連續超過 6 個月沒有任何使用紀錄</strong>，系統可能會將該帳號及其相關資料清除。請務必定期使用「下載排程備份檔 (JSON)」留存於本機裝置。</p>
 
                 <p style="margin-top:0.6rem;"><strong>八、資料可以帶走嗎？</strong><br>
-                可以。您建立的教材庫與每週排程完全歸您所有，可隨時匯出 JSON 備份檔，您的生活計畫絕不會被綁在我們這裡。</p>
+                  可以。您建立的教材庫與每週排程完全歸您所有，可隨時匯出 JSON 備份檔，您的生活計畫絕不會被綁在我們這裡。</p>
 
                 <p style="margin-top:0.6rem;"><strong>九、您的個人資料權利</strong><br>
-                您依法享有查詢、閱覽、補充、更正、停止處理及請求刪除等權利。重大條款變更將於網站適當位置公告。</p>
+                  您依法享有查詢、閱覽、補充、更正、停止處理及請求刪除等權利。重大條款變更將於網站適當位置公告。</p>
 
                 <p style="margin-top:0.6rem;"><strong>十、政策更新</strong><br>
-                本平台可能因應法令、功能或架構變化修改本政策，重大變更將於網站適當位置公告。</p>
+                  本平台可能因應法令、功能或架構變化修改本政策，重大變更將於網站適當位置公告。</p>
 
-                <p style="margin-top:0.8rem; border-top:1px dashed #D6CEBE; padding-top:0.6rem; font-style:italic; color:var(--primary-color);">
+                <p
+                  style="margin-top:0.8rem; border-top:1px dashed #D6CEBE; padding-top:0.6rem; font-style:italic; color:var(--primary-color);">
                   🌿 我們不需要知道你是誰，也不需要知道你的生活細節。我們只希望讓網站正常運作，陪伴你把想做的事排進生活裡。
                 </p>
               </div>
@@ -2857,7 +2980,7 @@
       if (!globalTooltip || !text) return;
       globalTooltip.textContent = text;
       globalTooltip.style.display = 'block';
-      
+
       const rect = target.getBoundingClientRect();
       const tooltipRect = globalTooltip.getBoundingClientRect();
 
@@ -2948,7 +3071,7 @@
     function safeSetStorage(key, val) {
       try {
         localStorage.setItem(key, JSON.stringify(val));
-      } catch (e) {}
+      } catch (e) { }
     }
 
     let userMaterials = safeGetStorage('user_materials', []);
@@ -2968,7 +3091,7 @@
       const date = new Date(d);
       const day = date.getDay();
       const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-      date.setHours(0,0,0,0);
+      date.setHours(0, 0, 0, 0);
       return new Date(date.setDate(diff));
     }
 
@@ -3290,12 +3413,12 @@
 
       // Update Week Range Display
       const isMobile = window.innerWidth <= 768;
-      const startStr = isMobile 
-        ? `${weekDates[0].getMonth()+1}/${weekDates[0].getDate()}`
-        : `${weekDates[0].getFullYear()}/${String(weekDates[0].getMonth()+1).padStart(2,'0')}/${String(weekDates[0].getDate()).padStart(2,'0')}`;
+      const startStr = isMobile
+        ? `${weekDates[0].getMonth() + 1}/${weekDates[0].getDate()}`
+        : `${weekDates[0].getFullYear()}/${String(weekDates[0].getMonth() + 1).padStart(2, '0')}/${String(weekDates[0].getDate()).padStart(2, '0')}`;
       const endStr = isMobile
-        ? `${weekDates[6].getMonth()+1}/${weekDates[6].getDate()}`
-        : `${weekDates[6].getFullYear()}/${String(weekDates[6].getMonth()+1).padStart(2,'0')}/${String(weekDates[6].getDate()).padStart(2,'0')}`;
+        ? `${weekDates[6].getMonth() + 1}/${weekDates[6].getDate()}`
+        : `${weekDates[6].getFullYear()}/${String(weekDates[6].getMonth() + 1).padStart(2, '0')}/${String(weekDates[6].getDate()).padStart(2, '0')}`;
       document.getElementById('weekRangeDisplay').textContent = `${startStr} - ${endStr}`;
 
       const activeMaterials = getActiveMaterials();
@@ -3309,7 +3432,7 @@
         const isToday = (iso === todayIso);
         const dayOfWeekIdx = d.getDay(); // 0=Sun, 1=Mon...
         const isWeekend = (dayOfWeekIdx === 0 || dayOfWeekIdx === 6);
-        const dayName = dict.days ? dict.days[dayOfWeekIdx] : ['週日','週一','週二','週三','週四','週五','週六'][dayOfWeekIdx];
+        const dayName = dict.days ? dict.days[dayOfWeekIdx] : ['週日', '週一', '週二', '週三', '週四', '週五', '週六'][dayOfWeekIdx];
 
         const daySchedules = getActiveSchedulesForDate(iso);
         daySchedules.sort((a, b) => {
@@ -3370,7 +3493,7 @@
 
           const card = document.createElement('div');
           card.className = `kanban-card ${isCompleted ? 'completed' : ''}`;
-          
+
           if (currentCalendarMode === 'personal') {
             card.draggable = true;
             card.addEventListener('dragstart', (e) => {
@@ -3577,7 +3700,7 @@
         if (btnLoginGroup) btnLoginGroup.style.display = 'flex';
         loggedInCard.style.display = 'none';
         if (backupRow) backupRow.style.display = 'none';
-        
+
         if (formCard.style.display === 'flex' || formCard.style.display === 'block') {
           if (authMode === 'login') {
             btnLogin.classList.add('active');
@@ -3597,7 +3720,7 @@
     function openRecurrenceConfirmModal({ title, message, opt1Text, opt2Text, onOpt1, onOpt2 }) {
       document.getElementById('recurrenceConfirmTitle').textContent = title;
       document.getElementById('recurrenceConfirmMessage').textContent = message;
-      
+
       const btn1 = document.getElementById('btnConfirmOpt1');
       const btn2 = document.getElementById('btnConfirmOpt2');
 
@@ -3737,7 +3860,7 @@
       document.getElementById('editTargetDateIso').value = targetDateIso || sched.date;
       document.getElementById('editSchedTime').value = sched.startTime || '';
       document.getElementById('editSchedRepeatType').value = sched.repeat || 'none';
-      
+
       const isMonthly = (sched.repeat === 'monthly');
       document.getElementById('editGroupMonthlyDay').style.display = isMonthly ? 'flex' : 'none';
       document.getElementById('editSchedMonthlyDay').value = sched.monthlyDay || (sched.date ? new Date(sched.date).getDate() : 15);
@@ -3833,12 +3956,12 @@
       });
     }
 
-    window.addUrlField = function() {
+    window.addUrlField = function () {
       currentUrlList.push('');
       renderUrlInputFields();
     };
 
-    window.removeUrlField = function(idx) {
+    window.removeUrlField = function (idx) {
       currentUrlList.splice(idx, 1);
       renderUrlInputFields();
     };
@@ -3981,7 +4104,7 @@
       const drawer = document.getElementById('drawerMaterials');
       const toggleBtn = document.getElementById('btnToggleDrawer');
       const floatTab = document.getElementById('drawerFloatingTab');
-      
+
       drawer.classList.toggle('collapsed');
       const isCollapsed = drawer.classList.contains('collapsed');
 
@@ -4312,4 +4435,5 @@
     });
   </script>
 </body>
+
 </html>

@@ -5,8 +5,15 @@ import styles from './Kanban.module.css';
 
 export interface TaskItem {
     id: string;
+    scheduleId?: string;
+    dateIso?: string;
     title: string;
     time?: string;
+    endTime?: string;
+    materialId?: string;
+    repeat?: string;
+    monthlyDay?: number;
+    completed?: boolean;
 }
 
 export type KanbanItems = Record<string, TaskItem[]>;
@@ -15,9 +22,23 @@ interface WeeklyCalendarProps {
     weekStartDate: Date;
     items: KanbanItems;
     mode: 'personal' | 'host';
+    onDeleteCard: (id: string, dateIso?: string) => void;
+    onToggleComplete?: (id: string, dateIso?: string) => void;
+    onEditCard?: (id: string, dateIso?: string) => void;
+    onOpenAddClass?: (dateIso: string) => void;
+    onPlayVideo?: (task: TaskItem) => void;
 }
 
-export function Kanban({ weekStartDate, items, mode }: WeeklyCalendarProps) {
+export function Kanban({
+    weekStartDate,
+    items,
+    mode,
+    onDeleteCard,
+    onToggleComplete,
+    onEditCard,
+    onOpenAddClass,
+    onPlayVideo,
+}: WeeklyCalendarProps) {
     const weekDates = [];
 
     for (let i = 0; i < 7; i++) {
@@ -40,7 +61,10 @@ export function Kanban({ weekStartDate, items, mode }: WeeklyCalendarProps) {
         <div className={styles.kanbanScrollWrapper}>
             <div className={styles.kanbanBoard}>
                 {weekDates.map((date) => {
-                    const key = date.toISOString().split('T')[0];
+                    const y = date.getFullYear();
+                    const m = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const key = `${y}-${m}-${day}`;
                     const title = `${date.getMonth() + 1}/${date.getDate()} ${dayNames[date.getDay()]}`;
                     const columnTasks = items[key] || [];
 
@@ -49,6 +73,8 @@ export function Kanban({ weekStartDate, items, mode }: WeeklyCalendarProps) {
                             key={key}
                             id={key}
                             date={title}
+                            mode={mode}
+                            onOpenAddClass={() => onOpenAddClass?.(key)}
                         >
                             {columnTasks.map((task, index) => (
                                 <Item
@@ -59,6 +85,11 @@ export function Kanban({ weekStartDate, items, mode }: WeeklyCalendarProps) {
                                     column={key}
                                     index={index}
                                     mode={mode}
+                                    completed={task.completed}
+                                    onDeleteCard={(id) => onDeleteCard(id, key)}
+                                    onToggleComplete={(id) => onToggleComplete?.(id, key)}
+                                    onEditCard={(id) => onEditCard?.(id, key)}
+                                    onPlayVideo={() => onPlayVideo?.(task)}
                                 />
                             ))}
                         </Column>

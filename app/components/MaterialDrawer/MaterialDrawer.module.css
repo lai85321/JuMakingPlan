@@ -24,7 +24,8 @@
 }
 
 /* Drawer Floating Right Edge Tab Handle */
-.drawer-floating-tab {
+.drawer-floating-tab,
+.drawerFloatingTab {
     position: fixed;
     right: 0;
     top: 50%;
@@ -280,6 +281,25 @@
 .btn-collect-star:hover {
     background-color: #FFF8E1;
     border-color: #FFC107;
+}
+
+.cardBtnIcon {
+    border: none;
+    background: transparent;
+    color: #B0BEC5;
+    font-size: 0.85rem;
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 99em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+
+.cardBtnIcon:hover {
+    color: #E53935;
+    background: #FFEBEE;
 }
 
 .drawerFooterHint {
