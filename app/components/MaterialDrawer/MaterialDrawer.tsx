@@ -118,32 +118,33 @@ export function MaterialDrawer({
                                 勾選標籤進行多選篩選
                             </div>
                         </div>
-                        {isTagDropdownOpen && <div className={styles.tagDropdownMenu}>
-                            <label className={styles.tagDropdownItem}>
-                                <input
-                                    type="checkbox"
-                                    checked={isAllChecked}
-                                    onChange={(e) =>
-                                        handleAllChange(e.currentTarget.checked)
-                                    }
-                                />
-
-                                <span>全部標籤</span>
-                            </label>
-                            {tags.map((tag) => (
-                                <label className={styles.tagDropdownItem} key={tag}>
+                        {isTagDropdownOpen && (
+                            <div className={styles.tagDropdownMenu}>
+                                <label className={styles.tagDropdownItem}>
                                     <input
                                         type="checkbox"
-                                        checked={activeTagFilterSet.has(tag)}
+                                        checked={isAllChecked}
                                         onChange={(e) =>
-                                            handleTagChange(tag, e.currentTarget.checked)
+                                            handleAllChange(e.currentTarget.checked)
                                         }
                                     />
-                                    <span>{tag}</span>
+
+                                    <span>全部標籤</span>
                                 </label>
-                            ))}
-                        </div>
-                        }</div>
+                                {tags.map((tag) => (
+                                    <label className={styles.tagDropdownItem} key={tag}>
+                                        <input
+                                            type="checkbox"
+                                            checked={activeTagFilterSet.has(tag)}
+                                            onChange={(e) =>
+                                                handleTagChange(tag, e.currentTarget.checked)
+                                            }
+                                        />
+                                        <span>{tag}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        )}</div>
                 </div>
                 <div className={styles.drawerList}>
                     {filteredMaterials.map((material) => (

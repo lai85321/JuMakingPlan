@@ -25,6 +25,7 @@ import {
 } from './lib/scheduleHelper';
 
 export default function Home() {
+  const [fontLevel, setFontLevel] = useState(0);
   const [mode, setMode] = useState<'personal' | 'host'>('personal');
   const [weekStart, setWeekStart] = useState<Date>(() => getMonday(new Date()));
 
@@ -38,6 +39,13 @@ export default function Home() {
     return dates;
   }, [weekStart]);
 
+  const fontScales = {
+    '-1': '0.9rem',
+    '0': '1.0rem',
+    '1': '1.1rem',
+  };
+
+  const fontSize = fontScales[String(fontLevel) as keyof typeof fontScales];
   // 教材庫列表
   const [materials, setMaterials] = useState<MaterialData[]>(() => {
     const fallback: MaterialData[] = [
@@ -77,7 +85,13 @@ export default function Home() {
     ];
     return safeGetStorage('user_schedules', fallback);
   });
+  const handleFontDec = () => {
+    setFontLevel((prev) => Math.max(-1, prev - 1));
+  }
 
+  const handleFontInc = () => {
+    setFontLevel((prev) => Math.min(1, prev + 1));
+  }
   useEffect(() => {
     safeSetStorage('user_schedules', schedules);
   }, [schedules]);
@@ -122,8 +136,8 @@ export default function Home() {
     message: '',
     opt1Text: '',
     opt2Text: '',
-    onOpt1: () => {},
-    onOpt2: () => {},
+    onOpt1: () => { },
+    onOpt2: () => { },
   });
 
   // 影片播放器 Modal 狀態
@@ -599,13 +613,15 @@ export default function Home() {
         <div className="hdr-right">
           <div className="font-btn-group">
             <div className="tooltip-wrapper tooltip-bottom">
-              <button id="btnFontDec">A-</button>
+              <button id="btnFontDec" onClick={handleFontDec}
+                disabled={fontLevel === -1}>A-</button>
               <div className="custom-tooltip" role="tooltip" data-i18n="tooltipLanguage">
                 縮小字型
               </div>
             </div>
             <div className="tooltip-wrapper tooltip-bottom">
-              <button id="btnFontInc">A+</button>
+              <button id="btnFontInc" onClick={handleFontInc}
+                disabled={fontLevel === 1}>A+</button>
               <div className="custom-tooltip" role="tooltip" data-i18n="tooltipLanguage">
                 放大字型
               </div>
@@ -614,10 +630,10 @@ export default function Home() {
           <div className="tooltip-wrapper tooltip-bottom">
             <select className="lang-select" id="langSelect" defaultValue="zh-TW">
               <option value="zh-TW">繁體中文</option>
-              <option value="en">English</option>
+              {/* <option value="en">English</option>
               <option value="ja">日本語</option>
               <option value="ko">한국어</option>
-              <option value="es">Español</option>
+              <option value="es">Español</option> */}
             </select>
             <div className="custom-tooltip" role="tooltip" data-i18n="tooltipLanguage">
               切換介面語言 / Switch Language
@@ -747,7 +763,7 @@ export default function Home() {
       <main>
         <div className="view-content active">
           <DragDropProvider onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
-            <div className="flex-1 flex h-full overflow-hidden padding: 0.6rem; gap: 0.6rem; position: relative;">
+            <div style={{ fontSize }} className="flex-1 flex h-full overflow-hidden padding: 0.6rem; gap: 0.6rem; position: relative;">
               <Kanban
                 weekStartDate={weekStart}
                 items={items}
@@ -800,11 +816,11 @@ export default function Home() {
         initialData={
           editingSchedule
             ? {
-                title: editingSchedule.title,
-                startTime: editingSchedule.startTime,
-                repeat: editingSchedule.repeat,
-                monthlyDay: editingSchedule.monthlyDay,
-              }
+              title: editingSchedule.title,
+              startTime: editingSchedule.startTime,
+              repeat: editingSchedule.repeat,
+              monthlyDay: editingSchedule.monthlyDay,
+            }
             : null
         }
         onClose={() => setIsEditScheduleModalOpen(false)}
