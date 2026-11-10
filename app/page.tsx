@@ -25,9 +25,14 @@ import {
 } from './lib/scheduleHelper';
 
 export default function Home() {
+  const [isMounted, setIsMounted] = useState(false);
   const [fontLevel, setFontLevel] = useState(0);
   const [mode, setMode] = useState<'personal' | 'host'>('personal');
   const [weekStart, setWeekStart] = useState<Date>(() => getMonday(new Date()));
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const weekDates = useMemo(() => {
     const dates: Date[] = [];
@@ -579,6 +584,17 @@ export default function Home() {
   const startStr = `${weekDates[0].getFullYear()}/${String(weekDates[0].getMonth() + 1).padStart(2, '0')}/${String(weekDates[0].getDate()).padStart(2, '0')}`;
   const endStr = `${weekDates[6].getFullYear()}/${String(weekDates[6].getMonth() + 1).padStart(2, '0')}/${String(weekDates[6].getDate()).padStart(2, '0')}`;
 
+  if (!isMounted) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center bg-[var(--bg-main)]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="logo-box text-2xl font-bold animate-pulse">聚</div>
+          <span className="text-sm font-semibold text-[var(--primary-color)]">載入中...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Header */}
@@ -690,7 +706,7 @@ export default function Home() {
                 上一週
               </div>
             </div>
-            <span className="week-range-text" id="weekRangeDisplay">
+            <span className="week-range-text" id="weekRangeDisplay" suppressHydrationWarning>
               {startStr} - {endStr}
             </span>
             <div className="tooltip-wrapper">
@@ -711,10 +727,10 @@ export default function Home() {
 
           <div className="progress-stats-box">
             <span data-i18n="completedProgressLabel">本週累計完成：</span>
-            <span className="progress-highlight" id="lblCompletedCount">
+            <span className="progress-highlight" id="lblCompletedCount" suppressHydrationWarning>
               {completedCount}
             </span>{' '}
-            / <span id="lblTotalCount">{totalCount}</span>{' '}
+            / <span id="lblTotalCount" suppressHydrationWarning>{totalCount}</span>{' '}
             <span data-i18n="videoUnit">部影片</span>
           </div>
 

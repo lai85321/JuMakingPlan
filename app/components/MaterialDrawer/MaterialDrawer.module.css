@@ -126,6 +126,7 @@
     transition: all 0.15s ease;
 }
 
+.tagDropdownBtn:hover,
 .tag-dropdown-btn:hover {
     background-color: #F8F6F0;
     border-color: var(--accent-color);
@@ -180,7 +181,8 @@
     gap: 0.5rem;
 }
 
-.empty-drawer-notice {
+.empty-drawer-notice,
+.emptyDrawerNotice {
     padding: 1.5rem 0.8rem;
     text-align: center;
     color: var(--text-muted);

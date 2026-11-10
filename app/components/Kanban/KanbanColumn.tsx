@@ -7,11 +7,12 @@ interface ColumnProps {
     children: React.ReactNode;
     id: string;
     date: string;
+    isToday?: boolean;
     mode?: 'personal' | 'host';
     onOpenAddClass?: () => void;
 }
 
-export function Column({ children, id, date, mode = 'personal', onOpenAddClass }: ColumnProps) {
+export function Column({ children, id, date, isToday = false, mode = 'personal', onOpenAddClass }: ColumnProps) {
     const { ref } = useDroppable({
         id,
         type: 'column',
@@ -19,29 +20,21 @@ export function Column({ children, id, date, mode = 'personal', onOpenAddClass }
         collisionPriority: CollisionPriority.Low,
         disabled: mode === 'host',
     });
-    const today = new Date();
-    const todayString = [
-        // today.getFullYear(),
-        String(today.getMonth() + 1).padStart(2, '0'),
-        String(today.getDate()).padStart(2, '0'),
-    ].join('/');
 
-    const isToday = date.slice(0, -2).trim() === todayString;
-    console.log(date, todayString, isToday);
     return (
         <div
-            className={`${styles.kanbanCol} ${isToday ? styles.todayHighlight : ''
-                }`}
+            className={`${styles.kanbanCol} ${isToday ? styles.todayHighlight : ''}`}
             ref={ref}
+            suppressHydrationWarning
         >
             {/* 日期標題 */}
             <div className={styles.colHeader}>
                 <div className={styles.colHeaderLeft}>
                     <div className={styles.colDateTitle}>
-                        <span className={styles.dateText}>{date}</span>
+                        <span className={styles.dateText} suppressHydrationWarning>{date}</span>
                     </div>
                 </div>
-                <div className={styles.colCountBadge}>{React.Children.count(children)}</div>
+                <div className={styles.colCountBadge} suppressHydrationWarning>{React.Children.count(children)}</div>
             </div>
             <div className={styles.colBody}>{children}</div>
             {mode === 'personal' && (

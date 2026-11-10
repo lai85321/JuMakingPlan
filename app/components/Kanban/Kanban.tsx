@@ -57,6 +57,9 @@ export function Kanban({
         '週六',
     ];
 
+    const today = new Date();
+    const todayIso = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
     return (
         <div className={styles.kanbanScrollWrapper}>
             <div className={styles.kanbanBoard}>
@@ -73,6 +76,7 @@ export function Kanban({
                             key={key}
                             id={key}
                             date={title}
+                            isToday={key === todayIso}
                             mode={mode}
                             onOpenAddClass={() => onOpenAddClass?.(key)}
                         >

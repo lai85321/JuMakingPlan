@@ -17,13 +17,16 @@ export const metadata: Metadata = {
   description: "聚✨養成計畫 | SOMETHING IN THE MAKING",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      lang="zh-TW"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="h-full flex flex-col overflow-hidden">{children}</body>
+      <body className="h-full flex flex-col overflow-hidden" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }
